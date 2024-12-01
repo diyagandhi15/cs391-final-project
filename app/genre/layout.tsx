@@ -1,4 +1,7 @@
-// Code written by Diya Gandhi
+// Author: Diya Gandhi
+// This component is used for the layout of the Genre Breakdown page. 
+// It provides the UserContext via the UserProvider to allow access to the user data in child components.
+
 "use client"
 import React from 'react';
 import { UserProvider } from '@/contexts/UserContext'; 
