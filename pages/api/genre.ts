@@ -2,7 +2,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
 
-// Helper function to fetch top artists from Spotify API
 const getTopArtists = async (accessToken: string) => {
   const url = 'https://api.spotify.com/v1/me/top/artists?limit=20';
 
@@ -12,9 +11,9 @@ const getTopArtists = async (accessToken: string) => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    return response.data; // Axios automatically parses the JSON
+    return response.data; 
   } catch (error) {
-    // Axios error handling
+
     if (axios.isAxiosError(error)) {
       const errorMessage = error.response?.data?.error?.message || error.message;
       console.error('Spotify API error:', errorMessage);
@@ -25,7 +24,6 @@ const getTopArtists = async (accessToken: string) => {
   }
 };
 
-// Extract genres from top artists
 const extractGenres = (artists: any[]) => {
   const genres: string[] = [];
   artists.forEach((artist) => {
@@ -34,7 +32,6 @@ const extractGenres = (artists: any[]) => {
   return genres;
 };
 
-// Main API handler
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const access_token = req.cookies.access_token;
 

@@ -1,10 +1,13 @@
 // Code written by Diya Gandhi
 
 "use client"; 
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 import { SpotifyUser } from '@/interfaces/profile';
 import { useRouter } from 'next/navigation';
+import SignInButton from '@/components/authentication/SignIn';
+import SignOutButton from '@/components/authentication/SignOut';
+import StyledButton from '@/components/ui/StyledButton';
 
 const params = new URLSearchParams({
   response_type: 'code',
@@ -14,18 +17,7 @@ const params = new URLSearchParams({
   state: '1234'
 });
 
-const StyledButton = styled.button`
-  background-color: #4CAF50; 
-  color: white; 
-  padding: 10px 20px; 
-  border: none; 
-  border-radius: 5px; 
-  font-size: 20px; 
 
-  &:hover {
-    background-color: #45a049; 
-  }
-`
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -34,7 +26,7 @@ const ButtonContainer = styled.div`
 
 export default function HomePage() {
   const [user, setUser] = useState<SpotifyUser | null>(null);
-  const router = useRouter();
+  // const router = useRouter();
 
   useEffect(() => {
     fetchData();
@@ -60,28 +52,21 @@ export default function HomePage() {
           .catch((error) => console.log(error));
   }
 
+  const router = useRouter(); 
+
   return (
     <div>
       {!user ? (
-        <div>
-          <StyledButton
-            onClick={() => window.location.href = 'https://accounts.spotify.com/authorize?' + params.toString()}
-          >
-          Sign In with Spotify
-          </StyledButton>
-        </div>
+        <SignInButton />
+          
       ) : (
         <ButtonContainer>  
           <StyledButton
-            onClick={() => router.push('/genre')} 
+            onClick={() => router.push('/genre')}  
           >
             Genre Breakdown
           </StyledButton>
-          <StyledButton
-            onClick={handleSignOut}
-          >
-            Sign Out
-          </StyledButton>
+          <SignOutButton handleSignOut={handleSignOut} />
         </ButtonContainer>
       )}
     </div>

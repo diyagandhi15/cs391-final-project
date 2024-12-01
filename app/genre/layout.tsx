@@ -1,9 +1,10 @@
+// Code written by Diya Gandhi
 "use client"
-
 import React from 'react';
 import { UserProvider } from '@/contexts/UserContext'; 
 import styled from 'styled-components';
 import { useRouter } from 'next/navigation';
+import StyledButton from '@/components/ui/StyledButton';
 
 const GenreLayoutContainer = styled.div`
   padding: 20px;
@@ -22,19 +23,6 @@ const GenreNav = styled.nav`
   text-align: center;
   margin: 20px 0;
 `;
-
-const StyledButton = styled.button`
-  background-color: #4CAF50; 
-  color: white; 
-  padding: 10px 20px; 
-  border: none; 
-  border-radius: 5px; 
-  font-size: 20px; 
-
-  &:hover {
-    background-color: #45a049; 
-  }
-`
 
 const GenreLayout = ({ children }: { children: React.ReactNode }) => {
     const router = useRouter(); 
