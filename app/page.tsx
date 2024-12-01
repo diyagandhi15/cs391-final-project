@@ -1,71 +1,65 @@
-// Code written by Diya Gandhi
+// Author: Diya Gandhi
+// This component serves as the landing page for the app, managing user authentication and navigation to other features.
 
 "use client"; 
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { SpotifyUser } from '@/interfaces/profile';
 import { useRouter } from 'next/navigation';
-import SignInButton from '@/components/authentication/SignIn';
-import SignOutButton from '@/components/authentication/SignOut';
-import StyledButton from '@/components/ui/StyledButton';
-
-const params = new URLSearchParams({
-  response_type: 'code',
-  client_id: process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID as string,
-  scope: 'user-read-private user-read-email user-top-read',
-  redirect_uri: process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI as string,
-  state: '1234'
-});
+import SignInButton from '@/components/authentication/SignIn'; 
+import SignOutButton from '@/components/authentication/SignOut'; 
+import StyledButton from '@/components/ui/StyledButton'; 
 
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; 
   width: 100%;
 `;
 
 export default function HomePage() {
-  const [user, setUser] = useState<SpotifyUser | null>(null);
-  // const router = useRouter();
+  const [user, setUser] = useState<SpotifyUser | null>(null); // Tracks the authenticated user state.
+  const router = useRouter();
 
   useEffect(() => {
-    fetchData();
-  },[]);
+    fetchData(); // Fetch user data on component mount.
+  }, []);
 
+  // Clears the user state and cookie upon sign-out.
   const handleSignOut = () => {
     document.cookie = 'token=; Max-Age=0; Path=/'; 
     setUser(null); 
   };
 
+  // Fetches the authenticated user's data from the API.
   const fetchData = () => {
-      fetch('/api/user', { credentials: 'include' })
+      fetch('/api/user', { credentials: 'include' }) // Includes cookies in the request.
           .then((response) => {
             if (response.ok) {
-              return response.json()
+              return response.json(); // Parse JSON if the response is successful.
             } else {
-              throw new Error('Error Fetching User:' + response.statusText)
+              throw new Error('Error Fetching User:' + response.statusText); // Handle errors.
             }
           })
           .then((json) => {
-            setUser(json)
+            setUser(json); // Update user state with fetched data.
           })
-          .catch((error) => console.log(error));
-  }
-
-  const router = useRouter(); 
+          .catch((error) => console.log(error)); // Log any errors.
+  };
 
   return (
     <div>
       {!user ? (
-        <SignInButton />
-          
+        // Renders the sign-in button if no user is authenticated.
+        <SignInButton /> 
       ) : (
+        // Displays navigation and sign-out options for authenticated users.
         <ButtonContainer>  
           <StyledButton
-            onClick={() => router.push('/genre')}  
+            onClick={() => router.push('/genre')} 
           >
             Genre Breakdown
           </StyledButton>
-          <SignOutButton handleSignOut={handleSignOut} />
+          <SignOutButton handleSignOut={handleSignOut} /> 
         </ButtonContainer>
       )}
     </div>

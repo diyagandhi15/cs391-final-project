@@ -1,4 +1,7 @@
-// Code written by Diya Gandhi
+// Author: Diya Gandhi
+// This file defines TypeScript interfaces for the structure of a Spotify user and related data. 
+// It includes SpotifyUser (user details), SpotifyFollowers (follower count and link), and SpotifyImage (image data for user profile).
+
 export interface SpotifyImage {
     height: number;
     url: string;

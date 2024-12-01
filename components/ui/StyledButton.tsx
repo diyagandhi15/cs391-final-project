@@ -1,4 +1,6 @@
-// Code written by Diya Gandhi
+// Author: Diya Gandhi
+// A reusable styled button component for consistent design across the app
+
 import styled from 'styled-components';
 
 const StyledButton = styled.button`
