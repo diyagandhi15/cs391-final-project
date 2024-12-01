@@ -59,6 +59,7 @@ export default function HomePage() {
           >
             Genre Breakdown
           </StyledButton>
+          <StyledButton onClick={() => router.push('/top-artists')}>Top Artists</StyledButton>
           <SignOutButton handleSignOut={handleSignOut} /> 
         </ButtonContainer>
       )}

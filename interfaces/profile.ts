@@ -22,3 +22,15 @@ export interface SpotifyImage {
     images: SpotifyImage[];
     product: string;
   }
+
+  export interface SpotifyArtist {
+    id: string;
+    name: string;
+    genres: string[];
+    images: SpotifyImage[];
+    followers: SpotifyFollowers;
+    popularity: number;
+    external_urls: {
+      spotify: string;
+    };
+}
