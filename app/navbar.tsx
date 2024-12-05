@@ -7,9 +7,11 @@ import { SpotifyUser } from "@/interfaces/profile";
 import SignInButton from "@/components/authentication/SignIn";
 import { useMediaQuery } from "@mui/material";
 import { Menu } from "@mui/icons-material";
+import { useUser } from "@/contexts/UserContext";
 
 export default function NavBar() {
-  const [user, setUser] = useState<SpotifyUser | null>(null); // Tracks the authenticated user state.
+  //   const [user, setUser] = useState<SpotifyUser | null>(null); // Tracks the authenticated user state.
+  const { user, setUser } = useUser();
   const router = useRouter();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -23,22 +25,24 @@ export default function NavBar() {
   const handleSignOut = () => {
     document.cookie = "token=; Max-Age=0; Path=/";
     setUser(null);
+    router.push("/");
   };
 
   // Fetches the authenticated user's data from the API.
-  const fetchData = () => {
-    fetch("/api/user", { credentials: "include" }) // Includes cookies in the request.
-      .then((response) => {
-        if (response.ok) {
-          return response.json(); // Parse JSON if the response is successful.
-        } else {
-          throw new Error("Error Fetching User:" + response.statusText); // Handle errors.
-        }
-      })
-      .then((json) => {
-        setUser(json); // Update user state with fetched data.
-      })
-      .catch((error) => console.log(error)); // Log any errors.
+  const fetchData = async () => {
+    try {
+      const res = await fetch("/api/user", { credentials: "include" });
+
+      if (!res.ok) {
+        setUser(null);
+      } else {
+        const data = await res.json();
+        setUser(data);
+      }
+    } catch (err) {
+      const error = err as Error;
+      console.error(error.message);
+    }
   };
 
   const toggleDrawer = (open: boolean) => {

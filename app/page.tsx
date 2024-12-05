@@ -69,19 +69,36 @@
 //     </div>
 //   );
 // }
+"use client";
 
 import Image from "next/image";
 import { Box } from "@mui/material";
+import { useUser } from "@/contexts/UserContext";
+import SignInButton from "@/components/authentication/SignIn";
 
 export default function Home() {
+  const { user } = useUser();
+
   return (
-    <Box width="100%" display="flex" justifyContent="center" marginTop="5rem">
-      <Image
-        src="/spotify-mobile-apps-icon-free-png.webp"
-        alt="spotify logo"
-        width="300"
-        height="300"
-      />
-    </Box>
+    <>
+      <Box width="100%" display="flex" justifyContent="center" marginTop="5rem">
+        <Image
+          src="/spotify-mobile-apps-icon-free-png.webp"
+          alt="spotify logo"
+          width="300"
+          height="300"
+        />
+      </Box>
+      {!user && (
+        <Box
+          display="flex"
+          width="100%"
+          justifyContent="center"
+          marginTop="2rem"
+        >
+          <SignInButton />
+        </Box>
+      )}
+    </>
   );
 }
