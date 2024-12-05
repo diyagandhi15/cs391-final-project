@@ -72,7 +72,7 @@
 "use client";
 
 import Image from "next/image";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useUser } from "@/contexts/UserContext";
 import SignInButton from "@/components/authentication/SignIn";
 
@@ -80,25 +80,31 @@ export default function Home() {
   const { user } = useUser();
 
   return (
-    <>
-      <Box width="100%" display="flex" justifyContent="center" marginTop="5rem">
-        <Image
-          src="/spotify-mobile-apps-icon-free-png.webp"
-          alt="spotify logo"
-          width="300"
-          height="300"
-        />
-      </Box>
-      {!user && (
-        <Box
-          display="flex"
-          width="100%"
-          justifyContent="center"
-          marginTop="2rem"
-        >
-          <SignInButton />
-        </Box>
+    <Box
+      width="100%"
+      display="flex"
+      alignItems="center"
+      marginTop="3rem"
+      flexDirection="column"
+      gap="1rem"
+    >
+      {user ? (
+        <Typography variant="h3" component="h2" gutterBottom>
+          My Spotify Insights
+        </Typography>
+      ) : (
+        <Typography variant="h3" component="h2" gutterBottom>
+          Spotify Insights
+        </Typography>
       )}
-    </>
+
+      <Image
+        src="/spotify-mobile-apps-icon-free-png.webp"
+        alt="spotify logo"
+        width="300"
+        height="300"
+      />
+      {!user && <SignInButton />}
+    </Box>
   );
 }

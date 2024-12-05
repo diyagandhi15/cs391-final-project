@@ -17,7 +17,7 @@ const GenreLayoutContainer = styled.div`
 
 const GenreHeader = styled.header`
   padding: 20px;
-  background-color: #4caf50;
+  background-color: #15a146;
   color: white;
   text-align: center;
 `;

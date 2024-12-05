@@ -56,65 +56,60 @@ export default function NavBar() {
     { label: "Sign Out", action: handleSignOut },
   ];
 
-  return user ? (
-    <AppBar position="sticky" sx={{ backgroundColor: "#4caf50" }}>
+  return (
+    <AppBar position="sticky" sx={{ backgroundColor: "#15a146" }}>
       <Toolbar>
         <Typography variant="h5" sx={{ flexGrow: 1 }}>
           Spotify Insights
         </Typography>
 
-        {isSmallScreen ? (
-          <>
-            <Button
-              color="inherit"
-              onClick={() => {
-                toggleDrawer(true);
-              }}
-            >
-              <Menu />
-            </Button>
-            <Drawer
-              anchor="right"
-              open={drawerOpen}
-              onClose={() => toggleDrawer(false)}
-            >
-              {navItems.map((item, index) => (
-                <Button
-                  key={index}
-                  color="inherit"
-                  onClick={() => {
-                    if (item.path) router.push(item.path);
-                    else if (item.action) item.action();
-                  }}
-                >
-                  {item.label}
-                </Button>
-              ))}
-            </Drawer>
-          </>
+        {user ? (
+          isSmallScreen ? (
+            <>
+              <Button
+                color="inherit"
+                onClick={() => {
+                  toggleDrawer(true);
+                }}
+              >
+                <Menu />
+              </Button>
+              <Drawer
+                anchor="right"
+                open={drawerOpen}
+                onClose={() => toggleDrawer(false)}
+              >
+                {navItems.map((item, index) => (
+                  <Button
+                    key={index}
+                    color="inherit"
+                    onClick={() => {
+                      if (item.path) router.push(item.path);
+                      else if (item.action) item.action();
+                    }}
+                  >
+                    {item.label}
+                  </Button>
+                ))}
+              </Drawer>
+            </>
+          ) : (
+            navItems.map((item, index) => (
+              <Button
+                key={index}
+                color="inherit"
+                onClick={() => {
+                  if (item.path) router.push(item.path);
+                  else if (item.action) item.action();
+                }}
+              >
+                {item.label}
+              </Button>
+            ))
+          )
         ) : (
-          navItems.map((item, index) => (
-            <Button
-              key={index}
-              color="inherit"
-              onClick={() => {
-                if (item.path) router.push(item.path);
-                else if (item.action) item.action();
-              }}
-            >
-              {item.label}
-            </Button>
-          ))
+          <SignInButton />
         )}
-      </Toolbar>
-    </AppBar>
-  ) : (
-    <AppBar position="sticky" sx={{ backgroundColor: "#4caf50" }}>
-      <Toolbar>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          Spotify Insights
-        </Typography>
-        <SignInButton />
       </Toolbar>
     </AppBar>
   );

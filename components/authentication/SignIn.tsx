@@ -15,7 +15,7 @@ const params = new URLSearchParams({
 export default function SignInButton() {
   return (
     <Button
-      color="inherit"
+      sx={{ backgroundColor: "#15a146", color: "white" }}
       onClick={() =>
         (window.location.href =
           "https://accounts.spotify.com/authorize?" + params.toString())

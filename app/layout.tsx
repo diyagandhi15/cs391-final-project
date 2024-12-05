@@ -1,10 +1,10 @@
 // Author: Diya Gandhi
 // This component defines the root layout of the application, providing global structure, styles, and the UserContext for state management.
 
-// "use client";
 import { UserProvider } from "@/contexts/UserContext";
 import { ReactNode } from "react";
 import NavBar from "./navbar";
+import "./globals.css";
 
 export const metadata = {
   title: "Spotify Insights App",
