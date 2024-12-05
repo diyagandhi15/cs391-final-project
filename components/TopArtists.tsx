@@ -1,9 +1,10 @@
 // Created By: Tsz Kit Wong
 // components/TopArtists.tsx
 
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import styled from 'styled-components';
+"use client";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import styled from "styled-components";
 
 const TopArtistsContainer = styled.div`
   padding: 20px;
@@ -43,7 +44,7 @@ const ArtistGenre = styled.p`
 const SeeMoreButton = styled.button`
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 5px;
@@ -64,10 +65,10 @@ const TopArtists = () => {
 
   const fetchTopArtists = async () => {
     try {
-      const response = await axios.get('/api/top-artists');
+      const response = await axios.get("/api/top-artists");
       setArtists(response.data.items);
     } catch (error) {
-      console.error('Error fetching top artists:', error);
+      console.error("Error fetching top artists:", error);
     }
   };
 
@@ -78,12 +79,12 @@ const TopArtists = () => {
           <ArtistImage src={artist.images[0]?.url} alt={artist.name} />
           <ArtistInfo>
             <ArtistName>{artist.name}</ArtistName>
-            <ArtistGenre>{artist.genres.join(', ')}</ArtistGenre>
+            <ArtistGenre>{artist.genres.join(", ")}</ArtistGenre>
           </ArtistInfo>
         </ArtistCard>
       ))}
       <SeeMoreButton onClick={() => setSeeMore(!seeMore)}>
-        {seeMore ? 'See Less' : 'See More'}
+        {seeMore ? "See Less" : "See More"}
       </SeeMoreButton>
     </TopArtistsContainer>
   );

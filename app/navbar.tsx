@@ -1,21 +1,24 @@
+/*
+Author: Eric Nohara-LeClair
+Description: This navbar component defines a navigation menu that is reused throughout the app by being put in the layout.tsx file. It displays a menu of buttons if a user is signed in, or a sign in button if a user is not signed in. Additionally, it features a drawer option for when the screen shrinks so that the layout of the nav bar looks good on mobile devices.
+*/
+
 "use client";
 
 import { useEffect, useState } from "react";
 import { AppBar, Toolbar, Typography, Button, Drawer } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { SpotifyUser } from "@/interfaces/profile";
 import SignInButton from "@/components/authentication/SignIn";
 import { useMediaQuery } from "@mui/material";
 import { Menu } from "@mui/icons-material";
 import { useUser } from "@/contexts/UserContext";
 
 export default function NavBar() {
-  //   const [user, setUser] = useState<SpotifyUser | null>(null); // Tracks the authenticated user state.
-  const { user, setUser } = useUser();
+  const { user, setUser } = useUser(); // set the user that can be accessed in other contexts
   const router = useRouter();
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false); // used to open the drawer of buttons
 
-  const isSmallScreen = useMediaQuery("(max-width: 750px)");
+  const isSmallScreen = useMediaQuery("(max-width: 825px)"); // make sure that the screen is not too small
 
   useEffect(() => {
     fetchData(); // Fetch user data on component mount.
@@ -52,7 +55,8 @@ export default function NavBar() {
   const navItems = [
     { label: "Profile", path: "/profile" },
     { label: "Genre Breakdown", path: "/genre" },
-    { label: "Top Artists", path: "/top-artists" },
+    { label: "Top Artists", path: "/artists" },
+    { label: "User Playlists", path: "/playlists" },
     { label: "Sign Out", action: handleSignOut },
   ];
 
