@@ -1,25 +1,30 @@
+"use client";
+
 import { Container, Typography, Box } from "@mui/material";
 import PlaylistList from "./playlist-list";
+import styled from "styled-components";
+
+const PlaylistsHeader = styled.header`
+  padding: 20px;
+  background-color: #15a146;
+  color: white;
+  text-align: center;
+  font-family: Arial, sans-serif;
+`;
 
 export default function PlaylistsPage() {
   return (
-    <Container maxWidth="sm">
-      <Box
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        marginTop="3rem"
-      >
-        <Typography
-          variant="h4"
-          component="h2"
-          gutterBottom
-          className="text-center"
-        >
-          User Playlists
-        </Typography>
-        <PlaylistList />
+    <>
+      <Box padding="20px">
+        <PlaylistsHeader>
+          <h1>User Playlists</h1>
+        </PlaylistsHeader>
       </Box>
-    </Container>
+      <Container maxWidth="sm">
+        <Box display="flex" flexDirection="column" alignItems="center">
+          <PlaylistList />
+        </Box>
+      </Container>
+    </>
   );
 }
