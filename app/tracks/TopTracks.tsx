@@ -1,11 +1,11 @@
 // Created By: Yasmine Jibrell
 
-
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { ISpotifyTrack } from "@/interfaces/ITracks";
+import { CircularProgress, Box } from "@mui/material";
 
 const TopTracksContainer = styled.div`
   padding: 20px;
@@ -93,23 +93,29 @@ const TopTracks = () => {
   const fetchTopTracks = async () => {
     setLoading(true);
     try {
-      const response = await axios.get<{ items: ISpotifyTrack[] }>("/api/toptracks", {
-        params: {
-          time_range: timeRange,
-          limit: trackLimit,
-        },
-      });
+      const response = await axios.get<{ items: ISpotifyTrack[] }>(
+        "/api/toptracks",
+        {
+          params: {
+            time_range: timeRange,
+            limit: trackLimit,
+          },
+        }
+      );
       setTracks(response.data.items);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.error("Axios error fetching top tracks:", error.response?.data || error.message);
+        console.error(
+          "Axios error fetching top tracks:",
+          error.response?.data || error.message
+        );
       } else {
         console.error("Unexpected error:", error);
       }
     } finally {
       setLoading(false);
     }
-  };  
+  };
 
   return (
     <TopTracksContainer>
@@ -135,7 +141,9 @@ const TopTracks = () => {
       </DropdownContainer>
 
       {loading ? (
-        <p>Loading...</p>
+        <Box display="flex" width="100%" justifyContent="center">
+          <CircularProgress sx={{ color: "#15a146" }} />
+        </Box>
       ) : (
         tracks.map((track) => (
           <TrackCard key={track.id}>

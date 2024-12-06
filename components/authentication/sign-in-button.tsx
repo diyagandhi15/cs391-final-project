@@ -23,14 +23,5 @@ export default function SignInButton() {
     >
       Sign in with Spotify
     </Button>
-    // <StyledButton
-    //   onClick={() =>
-    //     // Redirects the user to Spotify's authentication page with the defined parameters.
-    //     (window.location.href =
-    //       "https://accounts.spotify.com/authorize?" + params.toString())
-    //   }
-    // >
-    //   Sign In with Spotify
-    // </StyledButton>
   );
 }

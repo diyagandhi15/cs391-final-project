@@ -5,7 +5,7 @@ import PlaylistList from "./playlist-list";
 import {
   PageHeading,
   PageLayoutContainer,
-} from "@/components/prestyled-components";
+} from "@/components/ui/prestyled-components";
 
 export default function PlaylistsPage() {
   return (

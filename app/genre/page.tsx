@@ -9,7 +9,7 @@ import styled from "styled-components";
 import {
   PageHeading,
   PageLayoutContainer,
-} from "@/components/prestyled-components";
+} from "@/components/ui/prestyled-components";
 import { CircularProgress, Box } from "@mui/material";
 
 const GenrePageContainer = styled.div`

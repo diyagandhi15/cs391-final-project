@@ -10,7 +10,7 @@ import Link from "next/link";
 import {
   PageHeading,
   PageLayoutContainer,
-} from "@/components/prestyled-components";
+} from "@/components/ui/prestyled-components";
 
 const ProfileContainer = styled.div`
   display: flex;

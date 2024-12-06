@@ -3,11 +3,11 @@
 "use client";
 
 import React from "react";
-import TopArtists from "@/components/TopArtists";
+import TopArtists from "@/app/artists/TopArtists";
 import {
   PageHeading,
   PageLayoutContainer,
-} from "@/components/prestyled-components";
+} from "@/components/ui/prestyled-components";
 
 const TopArtistsPage = () => {
   return (

@@ -8,7 +8,7 @@ Description: This navbar component defines a navigation menu that is reused thro
 import { useEffect, useState } from "react";
 import { AppBar, Toolbar, Typography, Button, Drawer } from "@mui/material";
 import { useRouter } from "next/navigation";
-import SignInButton from "@/components/authentication/SignIn";
+import SignInButton from "@/components/authentication/sign-in-button";
 import { useMediaQuery } from "@mui/material";
 import { Menu } from "@mui/icons-material";
 import { useUser } from "@/contexts/UserContext";
