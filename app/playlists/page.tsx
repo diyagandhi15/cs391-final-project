@@ -3,22 +3,15 @@
 import { Container, Typography, Box } from "@mui/material";
 import PlaylistList from "./playlist-list";
 import styled from "styled-components";
-
-const PlaylistsHeader = styled.header`
-  padding: 20px;
-  background-color: #15a146;
-  color: white;
-  text-align: center;
-  font-family: Arial, sans-serif;
-`;
+import PageHeading from "@/components/page-heading";
 
 export default function PlaylistsPage() {
   return (
     <>
       <Box padding="20px">
-        <PlaylistsHeader>
+        <PageHeading>
           <h1>User Playlists</h1>
-        </PlaylistsHeader>
+        </PageHeading>
       </Box>
       <Container maxWidth="sm">
         <Box display="flex" flexDirection="column" alignItems="center">
