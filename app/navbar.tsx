@@ -26,8 +26,8 @@ export default function NavBar() {
   }, []);
 
   // Clears the user state and cookie upon sign-out.
-  const handleSignOut = () => {
-    document.cookie = "token=; Max-Age=0; Path=/";
+  const handleSignOut = async () => {
+    await fetch("/api/signout");
     setUser(null);
     router.push("/");
   };
