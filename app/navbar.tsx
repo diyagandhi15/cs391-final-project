@@ -12,6 +12,7 @@ import SignInButton from "@/components/authentication/SignIn";
 import { useMediaQuery } from "@mui/material";
 import { Menu } from "@mui/icons-material";
 import { useUser } from "@/contexts/UserContext";
+import Link from "next/link";
 
 export default function NavBar() {
   const { user, setUser } = useUser(); // set the user that can be accessed in other contexts
@@ -64,9 +65,17 @@ export default function NavBar() {
     <AppBar position="sticky" sx={{ backgroundColor: "#15a146" }}>
       <Toolbar>
         <Typography variant="h5" sx={{ flexGrow: 1 }}>
-          Spotify Insights
+          <Link
+            href="/"
+            style={{
+              textDecoration: "none",
+              color: "white",
+              fontWeight: "bold",
+            }}
+          >
+            Spotify Insights
+          </Link>
         </Typography>
-
         {user ? (
           isSmallScreen ? (
             <>
