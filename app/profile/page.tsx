@@ -165,7 +165,7 @@ export default function ProfilePage() {
                 </PlaylistItem>
                 ))}
             </PlaylistsContainer>
-            <LogoutButton onClick={handleLogout}>Log Out</LogoutButton>
+            <LogoutButton onClick={handleLogout}>Sign Out</LogoutButton>
         </ProfileContainer>
     );
 }
