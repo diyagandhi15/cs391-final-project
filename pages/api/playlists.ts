@@ -1,3 +1,8 @@
+/*
+Author: Eric Nohara-LeClair
+Description: this route /api/playlists uses the access token and fetches the current user's playlist data before sending it back to the client. This needed to be on the server side because we needed to access the access_token.
+*/
+
 import { NextApiRequest, NextApiResponse } from "next";
 
 // Main API handler to process the request and response
@@ -24,11 +29,13 @@ export default async function handler(
 
     const data = await resp.json();
 
+    console.log(data.items);
+
     if (!resp.ok) throw new Error(data.message);
 
-    // Send the genres back to the client as a JSON response
     res.status(200).json({ data });
   } catch (err) {
+    // error handling - need to cast to error
     const error = err as Error;
     console.error(error.message);
     res.status(400).json({ message: error.message });
