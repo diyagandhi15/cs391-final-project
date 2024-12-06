@@ -6,7 +6,10 @@
 
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import PageHeading from "@/components/page-heading";
+import {
+  PageHeading,
+  PageLayoutContainer,
+} from "@/components/prestyled-components";
 import { CircularProgress, Box } from "@mui/material";
 
 const GenrePageContainer = styled.div`
@@ -34,12 +37,6 @@ const GenreItem = styled.div`
   justify-content: space-between;
 `;
 
-const GenreLayoutContainer = styled.div`
-  padding: 20px;
-  background-color: #f5f5f5;
-  font-family: Arial, sans-serif;
-`;
-
 export default function GenrePage() {
   const [genres, setGenres] = useState<string[]>([]); // State to hold the genres data
 
@@ -54,7 +51,7 @@ export default function GenrePage() {
   }, []);
 
   return (
-    <GenreLayoutContainer>
+    <PageLayoutContainer>
       <PageHeading>
         <h1>Genre Breakdown</h1>
       </PageHeading>
@@ -74,6 +71,6 @@ export default function GenrePage() {
           )}
         </GenreListContainer>
       </GenrePageContainer>
-    </GenreLayoutContainer>
+    </PageLayoutContainer>
   );
 }

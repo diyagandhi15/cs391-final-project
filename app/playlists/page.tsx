@@ -2,22 +2,32 @@
 
 import { Container, Typography, Box } from "@mui/material";
 import PlaylistList from "./playlist-list";
-import styled from "styled-components";
-import PageHeading from "@/components/page-heading";
+import {
+  PageHeading,
+  PageLayoutContainer,
+} from "@/components/prestyled-components";
 
 export default function PlaylistsPage() {
   return (
     <>
-      <Box padding="20px">
+      <PageLayoutContainer>
         <PageHeading>
           <h1>User Playlists</h1>
         </PageHeading>
-      </Box>
-      <Container maxWidth="sm">
-        <Box display="flex" flexDirection="column" alignItems="center">
-          <PlaylistList />
-        </Box>
-      </Container>
+        <Container
+          sx={{
+            width: "100%",
+            backgroundColor: "white",
+            borderRadius: "0.5rem",
+          }}
+        >
+          <Container maxWidth="sm">
+            <Box display="flex" flexDirection="column" alignItems="center">
+              <PlaylistList />
+            </Box>
+          </Container>
+        </Container>
+      </PageLayoutContainer>
     </>
   );
 }

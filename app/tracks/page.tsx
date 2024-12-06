@@ -1,17 +1,19 @@
 // Created By: Yasmine Jibrell
-
+"use client";
 import React from "react";
 import TopTracks from "@/components/TopTracks";
+import {
+  PageHeading,
+  PageLayoutContainer,
+} from "@/components/prestyled-components";
 
-const TopTracksPage = () => {
+export default function TopTracksPage() {
   return (
-    <div>
-      <h1>Top Tracks</h1>
+    <PageLayoutContainer>
+      <PageHeading>
+        <h1>Top Tracks</h1>
+      </PageHeading>
       <TopTracks />
-    </div>
+    </PageLayoutContainer>
   );
-};
-
-export default TopTracksPage;
-
-
+}
