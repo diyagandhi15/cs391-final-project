@@ -19,6 +19,7 @@ export default function PlaylistsPage() {
             width: "100%",
             backgroundColor: "white",
             borderRadius: "0.5rem",
+            minHeight: "60vh",
           }}
         >
           <Container maxWidth="sm">

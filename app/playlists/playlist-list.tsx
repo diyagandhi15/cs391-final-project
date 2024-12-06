@@ -35,6 +35,7 @@ export default function PlaylistList() {
       width="100%"
       alignItems="center"
       gap="2rem"
+      marginTop="2rem"
     >
       {playlistData ? (
         playlistData.items.map((item, index) =>

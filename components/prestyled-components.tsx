@@ -9,7 +9,7 @@ export const PageHeading = styled.header`
 `;
 
 export const PageLayoutContainer = styled.div`
-  padding: 20px;
+  padding: 20px 20px 0 20px;
   background-color: #f5f5f5;
   font-family: Arial, sans-serif;
 `;
