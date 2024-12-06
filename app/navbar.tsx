@@ -57,6 +57,7 @@ export default function NavBar() {
     { label: "Profile", path: "/profile" },
     { label: "Genre Breakdown", path: "/genre" },
     { label: "Top Artists", path: "/artists" },
+    { label: "Top Tracks", path: "/tracks" },
     { label: "User Playlists", path: "/playlists" },
     { label: "Sign Out", action: handleSignOut },
   ];
