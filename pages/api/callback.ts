@@ -52,8 +52,8 @@ export default async function handler(
 
     // Store the access token in an HTTP-only cookie for security
     res.setHeader("Set-Cookie", [
-      `access_token=${access_token}; HttpOnly; Path=/;`,
-      `refresh_token=${refresh_token}; HttpOnly; Path=/;`,
+      `access_token=${access_token}; Path=/;`,
+      `refresh_token=${refresh_token}; Path=/;`,
     ]);
 
     // Redirect the user to the home page
