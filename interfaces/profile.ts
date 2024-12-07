@@ -21,6 +21,7 @@ export interface SpotifyUser {
   id: string;
   images: SpotifyImage[];
   product: string;
+  external_urls: { spotify: string } | null;
 }
 
 export interface SpotifyArtist {

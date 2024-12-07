@@ -19,7 +19,7 @@ export default function NavBar() {
   const router = useRouter();
   const [drawerOpen, setDrawerOpen] = useState(false); // used to open the drawer of buttons
 
-  const isSmallScreen = useMediaQuery("(max-width: 825px)"); // make sure that the screen is not too small
+  const isSmallScreen = useMediaQuery("(max-width: 950px)"); // make sure that the screen is not too small
 
   useEffect(() => {
     fetchData(); // Fetch user data on component mount.

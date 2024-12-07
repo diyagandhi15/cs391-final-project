@@ -11,6 +11,7 @@ import {
   PageHeading,
   PageLayoutContainer,
 } from "@/components/ui/prestyled-components";
+import { CircularProgress, Box } from "@mui/material";
 
 const ProfileContainer = styled.div`
   display: flex;
@@ -39,6 +40,9 @@ const ProfileImage = styled.img`
 
 const UserInfoText = styled.div`
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
   h2 {
     font-size: 1.8rem;
     margin: 0;
@@ -47,8 +51,14 @@ const UserInfoText = styled.div`
   }
   p {
     margin: 0;
+    margin-top: 0.5rem;
     font-size: 1.2rem;
     color: #b3b3b3; /* Subtle gray text */
+  }
+
+  i {
+    color: grey;
+    font-weight: 100;
   }
 `;
 
@@ -140,70 +150,60 @@ export default function ProfilePage() {
     window.location.href = "/"; // Redirect to homepage
   };
 
-  if (!profileData) return <div>Loading...</div>;
-
   return (
     <PageLayoutContainer>
       <PageHeading>
         <h1>User Profile</h1>
       </PageHeading>
-      <UserInfoWrapper>
-        <ProfileImage
-          src={profileData.images?.[0]?.url || "/default-profile.png"}
-          alt="Profile"
-        />
-        <UserInfoText>
-          <h2>{profileData.display_name}</h2>
-          <p>{profileData.email}</p>
-        </UserInfoText>
-      </UserInfoWrapper>
+      {profileData ? (
+        <ProfileContainer>
+          {/* Display User Info */}
+          <UserInfoWrapper>
+            <ProfileImage
+              src={profileData.images?.[0]?.url || "/default-profile.jpg"}
+              alt="Profile"
+            />
+            <UserInfoText>
+              <h2>{profileData.display_name}</h2>
+              <p>{profileData.email}</p>
+              <i>{profileData.followers.total} Followers</i>
+            </UserInfoText>
+          </UserInfoWrapper>
 
-      {/* Display Playlists */}
-      <PlaylistsContainer>
-        <h3>Your Playlists ({playlists.length})</h3>
-        {playlists.map((playlist: any) => (
-          <PlaylistItem key={playlist.id}>
-            <div>
-              <PlaylistImage src={playlist.image} alt={playlist.name} />
-              <h4>{playlist.name}</h4>
-            </div>
-            <Link href={playlist.url} target="_blank" rel="noopener noreferrer">
-              Open in Spotify
-            </Link>
-          </PlaylistItem>
-        ))}
-      </PlaylistsContainer>
-      <LogoutButton onClick={handleLogout}>Sign Out</LogoutButton>
+          {/* Display Playlists */}
+          <PlaylistsContainer>
+            <h3>Your Playlists ({playlists.length})</h3>
+            {playlists.map(
+              (playlist: any) =>
+                playlist && (
+                  <PlaylistItem key={playlist.id}>
+                    <div>
+                      <PlaylistImage src={playlist.image} alt={playlist.name} />
+                      <h4>{playlist.name}</h4>
+                    </div>
+                    <Link
+                      href={playlist.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Open in Spotify
+                    </Link>
+                  </PlaylistItem>
+                )
+            )}
+          </PlaylistsContainer>
+          <LogoutButton onClick={handleLogout}>Sign Out</LogoutButton>
+        </ProfileContainer>
+      ) : (
+        <Box
+          display="flex"
+          width="100%"
+          justifyContent="center"
+          marginTop="2rem"
+        >
+          <CircularProgress sx={{ color: "#15a146" }} />
+        </Box>
+      )}
     </PageLayoutContainer>
-    // <ProfileContainer>
-    //   {/* Display User Info */}
-    //   <UserInfoWrapper>
-    //     <ProfileImage
-    //       src={profileData.images?.[0]?.url || "/default-profile.png"}
-    //       alt="Profile"
-    //     />
-    //     <UserInfoText>
-    //       <h2>{profileData.display_name}</h2>
-    //       <p>{profileData.email}</p>
-    //     </UserInfoText>
-    //   </UserInfoWrapper>
-
-    //   {/* Display Playlists */}
-    //   <PlaylistsContainer>
-    //     <h3>Your Playlists ({playlists.length})</h3>
-    //     {playlists.map((playlist: any) => (
-    //       <PlaylistItem key={playlist.id}>
-    //         <div>
-    //           <PlaylistImage src={playlist.image} alt={playlist.name} />
-    //           <h4>{playlist.name}</h4>
-    //         </div>
-    //         <Link href={playlist.url} target="_blank" rel="noopener noreferrer">
-    //           Open in Spotify
-    //         </Link>
-    //       </PlaylistItem>
-    //     ))}
-    //   </PlaylistsContainer>
-    //   <LogoutButton onClick={handleLogout}>Sign Out</LogoutButton>
-    // </ProfileContainer>
   );
 }

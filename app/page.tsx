@@ -9,9 +9,20 @@ import Image from "next/image";
 import { Box, Typography } from "@mui/material";
 import { useUser } from "@/contexts/UserContext";
 import SignInButton from "@/components/authentication/sign-in-button";
+import styled from "styled-components";
+
+const SpotifyLogoLink = styled(Image)`
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
 
 export default function Home() {
   const { user } = useUser();
+
+  console.log(user);
 
   return (
     <Box
@@ -24,20 +35,31 @@ export default function Home() {
     >
       {user ? (
         <Typography variant="h3" component="h2" gutterBottom>
-          My Spotify Insights
+          {user.display_name ? user.display_name : "User"}&apos;s Spotify
+          Insights
         </Typography>
       ) : (
         <Typography variant="h3" component="h2" gutterBottom>
           Spotify Insights
         </Typography>
       )}
-
-      <Image
-        src="/spotify-mobile-apps-icon-free-png.webp"
-        alt="spotify logo"
-        width="300"
-        height="300"
-      />
+      {user && user.external_urls ? (
+        <a href={user.external_urls.spotify} target="_blank">
+          <SpotifyLogoLink
+            src="/spotify-mobile-apps-icon-free-png.webp"
+            alt="spotify logo"
+            width="300"
+            height="300"
+          />
+        </a>
+      ) : (
+        <Image
+          src="/spotify-mobile-apps-icon-free-png.webp"
+          alt="spotify logo"
+          width="300"
+          height="300"
+        />
+      )}
       {!user && <SignInButton />}
     </Box>
   );
