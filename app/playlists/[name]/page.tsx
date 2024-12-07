@@ -1,18 +1,26 @@
 "use client";
 
 import { Container, Box } from "@mui/material";
-import PlaylistList from "./playlist-list";
 import {
   PageHeading,
   PageLayoutContainer,
 } from "@/components/ui/prestyled-components";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import TrackList from "./track-list";
 
 export default function PlaylistsPage() {
+  const router = useRouter();
+  const params = useParams();
+  const encodedName = params?.name as string;
+  const name = decodeURIComponent(encodedName);
+
+  if (!name) router.push("/playlists");
+
   return (
     <>
       <PageLayoutContainer>
         <PageHeading>
-          <h1>User Playlists</h1>
+          <h1>{name} Tracks</h1>
         </PageHeading>
         <Container
           sx={{
@@ -24,7 +32,7 @@ export default function PlaylistsPage() {
         >
           <Container maxWidth="sm">
             <Box display="flex" flexDirection="column" alignItems="center">
-              <PlaylistList />
+              <TrackList />
             </Box>
           </Container>
         </Container>

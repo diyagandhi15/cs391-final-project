@@ -5,6 +5,7 @@ import { Box, Typography, CircularProgress, Button } from "@mui/material";
 import { ISpotifyPlaylist } from "@/interfaces/IPlaylist";
 import Image from "next/image";
 import styled from "styled-components";
+import { useRouter } from "next/navigation";
 
 const PlaylistCoverLink = styled(Image)`
   border-radius: 0.25rem;
@@ -15,6 +16,7 @@ const PlaylistCoverLink = styled(Image)`
 `;
 
 export default function PlaylistList() {
+  const router = useRouter();
   const [playlistData, setPlaylistData] = useState<ISpotifyPlaylist | null>(
     null
   );
@@ -65,6 +67,7 @@ export default function PlaylistList() {
                     alt="playlist cover"
                     width={150}
                     height={150}
+                    priority
                   />
                 ) : (
                   <PlaylistCoverLink
@@ -72,6 +75,7 @@ export default function PlaylistList() {
                     alt="empty playlist cover"
                     width={150}
                     height={150}
+                    priority
                   />
                 )}
               </a>
@@ -102,6 +106,7 @@ export default function PlaylistList() {
                     color: "white",
                     width: "100%",
                   }}
+                  onClick={() => router.push(`/playlists/${item.name}`)}
                 >
                   View Tracks
                 </Button>

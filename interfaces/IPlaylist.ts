@@ -23,3 +23,15 @@ export interface ISpotifyPlaylist {
   total: number; // total number of playlists
   items: ISpotifyPlaylistItem[];
 }
+
+export interface ISpotifyPlaylistTrack {
+  added_at: string | null;
+  track: {
+    artists: string[];
+    duration_ms: number | null;
+    explicit: boolean | null;
+    external_urls: { spotify: string } | null;
+    name: string | null;
+    preview_url: string | null;
+  };
+}
