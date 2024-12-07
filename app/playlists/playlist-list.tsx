@@ -4,6 +4,15 @@ import { useState, useEffect } from "react";
 import { Box, Typography, CircularProgress, Button } from "@mui/material";
 import { ISpotifyPlaylist } from "@/interfaces/IPlaylist";
 import Image from "next/image";
+import styled from "styled-components";
+
+const PlaylistCoverLink = styled(Image)`
+  border-radius: 0.25rem;
+  transition: transform 0.3s ease;
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
 
 export default function PlaylistList() {
   const [playlistData, setPlaylistData] = useState<ISpotifyPlaylist | null>(
@@ -51,28 +60,18 @@ export default function PlaylistList() {
             >
               <a href={item.external_urls.spotify} target="_blank">
                 {item.images ? (
-                  <Image
+                  <PlaylistCoverLink
                     src={item.images[0].url} // error
                     alt="playlist cover"
                     width={150}
                     height={150}
-                    style={{
-                      borderRadius: "0.25rem",
-                      transition: "filter 0.3s ease",
-                    }}
-                    className="image-hover"
                   />
                 ) : (
-                  <Image
+                  <PlaylistCoverLink
                     src="/music-note.png"
                     alt="empty playlist cover"
                     width={150}
                     height={150}
-                    style={{
-                      borderRadius: "0.25rem",
-                      transition: "filter 0.3s ease",
-                    }}
-                    className="image-hover"
                   />
                 )}
               </a>
