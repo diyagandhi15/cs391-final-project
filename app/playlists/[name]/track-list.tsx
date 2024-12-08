@@ -3,7 +3,7 @@ import { ISpotifyPlaylistTrack } from "@/interfaces/IPlaylist";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Box, CircularProgress, Typography, Button } from "@mui/material";
 import TrackCover from "./track-cover";
-import { Explicit } from "@mui/icons-material";
+import { Explicit, NavigateNext, NavigateBefore } from "@mui/icons-material";
 
 export default function TrackList() {
   const searchParams = useSearchParams();
@@ -59,13 +59,29 @@ export default function TrackList() {
   };
 
   return (
-    <Box display="flex" flexDirection="column" gap="1rem" marginTop="1rem">
+    <Box
+      display="flex"
+      flexDirection="column"
+      gap="1rem"
+      marginTop="1rem"
+      width="100%"
+    >
       {tracks.length > 0 ? (
         tracks.map(
           (track: ISpotifyPlaylistTrack, index) =>
             track &&
             track.track && (
-              <Box key={index} display="flex" alignItems="center" gap="1rem">
+              <Box
+                key={index}
+                display="flex"
+                alignItems="center"
+                gap="1rem"
+                sx={{
+                  backgroundColor: "#f0f0f0",
+                  padding: "1rem",
+                  borderRadius: "0.5rem",
+                }}
+              >
                 <a href={track.track.external_urls?.spotify} target="_blank">
                   <TrackCover trackID={track.track.id} />
                 </a>
@@ -102,12 +118,21 @@ export default function TrackList() {
           <CircularProgress sx={{ color: "#15a146" }} />
         </Box>
       )}
-      <Box display="flex" gap="2rem">
+      <Box
+        display="flex"
+        gap="2rem"
+        justifyContent="center"
+        marginBottom="1rem"
+      >
         {page > 0 && (
-          <Button onClick={() => setPage(page - 1)}>Previous</Button>
+          <Button variant="contained" onClick={() => setPage(page - 1)}>
+            <NavigateBefore /> Back
+          </Button>
         )}
         {nextTracks.length > 0 && (
-          <Button onClick={() => setPage(page + 1)}>Next</Button>
+          <Button variant="contained" onClick={() => setPage(page + 1)}>
+            Next <NavigateNext />
+          </Button>
         )}
       </Box>
     </Box>

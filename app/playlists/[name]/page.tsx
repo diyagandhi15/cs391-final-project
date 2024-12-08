@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/prestyled-components";
 import { useParams, useRouter } from "next/navigation";
 import TrackList from "./track-list";
+import Link from "next/link";
 
 export default function PlaylistsPage() {
   const router = useRouter();
@@ -20,7 +21,7 @@ export default function PlaylistsPage() {
     <>
       <PageLayoutContainer>
         <PageHeading>
-          <h1>{name} Tracks</h1>
+          <h1>Tracks From {name}</h1>
         </PageHeading>
         <Container
           sx={{
@@ -33,6 +34,15 @@ export default function PlaylistsPage() {
           <Container maxWidth="sm">
             <Box display="flex" flexDirection="column" alignItems="center">
               <TrackList />
+              <Link
+                href="/playlists"
+                style={{
+                  textDecoration: "none",
+                  marginBottom: "1rem",
+                }}
+              >
+                Return
+              </Link>
             </Box>
           </Container>
         </Container>

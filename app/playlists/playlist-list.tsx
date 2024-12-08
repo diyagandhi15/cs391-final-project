@@ -47,6 +47,7 @@ export default function PlaylistList() {
       alignItems="center"
       gap="2rem"
       marginTop="2rem"
+      marginBottom="2rem"
     >
       {playlistData ? (
         playlistData.items.map((item, index) =>
