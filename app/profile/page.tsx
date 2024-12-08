@@ -166,7 +166,7 @@ export default function ProfilePage() {
             <UserInfoText>
               <h2>{profileData.display_name}</h2>
               <p>{profileData.email}</p>
-              <i>{profileData.followers.total} Followers</i>
+              {/* <i>{profileData.followers.total} Followers</i> */}
             </UserInfoText>
           </UserInfoWrapper>
 

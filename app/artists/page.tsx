@@ -1,4 +1,5 @@
 // Created By: Tsz Kit Wong
+// page for the top artists page, displays the user's top (most listened to) artists from Spotify
 
 "use client";
 
