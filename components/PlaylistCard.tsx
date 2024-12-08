@@ -1,3 +1,9 @@
+//Author: Hilal Sena Bayram
+//This component is responsible for displaying individual Spotify playlists 
+//as cards in the user's profile page. It receives playlist data as props
+//and renders each playlist card with its details.
+
+import React from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import {Playlist} from "../interfaces/userplaylist";
