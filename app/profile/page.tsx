@@ -146,7 +146,6 @@ export default function ProfilePage() {
               <h2>{profileData.display_name}</h2>
               <p><strong>Email:</strong> {profileData.email}</p>
               <p><strong>Country:</strong> {profileData.country}</p>
-              <StyledItalicP>{profileData.followers.total} Followers</StyledItalicP>
             </UserInfoText>
           </UserInfoWrapper>
 
