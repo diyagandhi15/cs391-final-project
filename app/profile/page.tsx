@@ -6,18 +6,15 @@
 
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import Link from "next/link";
-import {
-  PageHeading,
-  PageLayoutContainer,
-} from "@/components/ui/prestyled-components";
+import { PageHeading, PageLayoutContainer,} from "@/components/ui/prestyled-components";
 import { CircularProgress, Box } from "@mui/material";
+import PlaylistCard from "@/components/PlaylistCard";
 
 const ProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 20px auto;
+  margin: auto;
   padding: 2rem;
   background-color: #121212;
   color: #ffffff; /* White text */
@@ -27,12 +24,12 @@ const ProfileContainer = styled.div`
 const UserInfoWrapper = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 2rem;
+  margin: 2rem;
 `;
 
 const ProfileImage = styled.img`
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   margin-right: 1.5rem;
   border: 3px solid #1db954; /* Spotify green border */
@@ -82,58 +79,45 @@ const LogoutButton = styled.button`
 const PlaylistsContainer = styled.div`
   width: 80%;
   max-width: 700px;
-  display: flex;
-  flex-direction: column;
-`;
-
-const PlaylistItem = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #181818; /* Darker section for playlists */
+  background-color: #1c1c1c;
+  border: 2px solid #1db954;
+  color: #ffffff;
   border-radius: 8px;
   padding: 1rem;
-  margin-bottom: 0.5rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s, background-color 0.3s ease;
+  text-align: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #282828; /* Slightly lighter hover effect */
-    transform: scale(1.02); /*Enlarging the div when the curser is on it*/
-  }
-
-  div {
-    display: flex;
-    align-items: center;
-  }
-
-  h4 {
-    font-size: 1.2rem;
-    margin-left: 1rem;
-    color: #ffffff; /* White text */
-  }
-
-  a {
-    color: #1db954; /* Spotify green */
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s ease;
-
-    &:hover {
-      color: #ffffff; /* White on hover */
-    }
+    background-color: #282828;
   }
 `;
 
-const PlaylistImage = styled.img`
-  width: 60px;
-  height: 60px;
-  border-radius: 8px;
+const CollapsibleContainer = styled.div`
+  width: 80%;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+`;
+
+const StyledItalicP = styled.p`
+  font-style: italic;
+  color: #b3b3b3;
+  margin-top: 0.5rem;
 `;
 
 export default function ProfilePage() {
   const [profileData, setProfileData] = useState<any>(null);
   const [playlists, setPlaylists] = useState<any[]>([]); // Initialize as an empty array to prevent undefined errors
+  const [followedArtists, setFollowedArtists] = useState<any[]>([]);
+  const [isPlaylistsOpen, setIsPlaylistsOpen] = useState(false);
+  const [isArtistsOpen, setIsArtistsOpen] = useState(false);
+
 
   useEffect(() => {
     fetch("/api/profile")
@@ -141,6 +125,7 @@ export default function ProfilePage() {
       .then((data) => {
         setProfileData(data.profile || {}); // Ensure profile data is always an object
         setPlaylists(data.playlists || []); // Ensure playlists is always an array
+        setFollowedArtists(data.followedArtists || []);
       })
       .catch((err) => console.error(err));
   }, []);
@@ -159,40 +144,37 @@ export default function ProfilePage() {
         <ProfileContainer>
           {/* Display User Info */}
           <UserInfoWrapper>
-            <ProfileImage
-              src={profileData.images?.[0]?.url || "/default-profile.jpg"}
-              alt="Profile"
-            />
+            <ProfileImage src={profileData.images?.[0]?.url || "/default-profile.jpg"} alt="Profile photo"/>
             <UserInfoText>
               <h2>{profileData.display_name}</h2>
-              <p>{profileData.email}</p>
-              {/* <i>{profileData.followers.total} Followers</i> */}
+              <p><strong>Email:</strong> {profileData.email}</p>
+              <p><strong>Country:</strong> {profileData.country}</p>
+              <StyledItalicP>{profileData.followers.total} Followers</StyledItalicP>
             </UserInfoText>
           </UserInfoWrapper>
 
           {/* Display Playlists */}
-          <PlaylistsContainer>
-            <h3>Your Playlists ({playlists.length})</h3>
-            {playlists.map(
-              (playlist: any) =>
-                playlist && (
-                  <PlaylistItem key={playlist.id}>
-                    <div>
-                      <PlaylistImage src={playlist.image} alt={playlist.name} />
-                      <h4>{playlist.name}</h4>
-                    </div>
-                    <Link
-                      href={playlist.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Open in Spotify
-                    </Link>
-                  </PlaylistItem>
-                )
-            )}
+
+          {/* Collapsible Playlists */}
+          <PlaylistsContainer onClick={() => setIsPlaylistsOpen(!isPlaylistsOpen)}>
+            <span>You have {playlists.length} playlists</span>
           </PlaylistsContainer>
+          {isPlaylistsOpen && (
+            <CollapsibleContainer>
+              {playlists.map((playlist) => (
+                <PlaylistCard
+                  key={playlist.id}
+                  id={playlist.id}
+                  name={playlist.name}
+                  image={playlist.image || "/default-profile.png"}
+                  url={playlist.url}
+                />
+              ))}
+            </CollapsibleContainer>
+          )}
+
           <LogoutButton onClick={handleLogout}>Sign Out</LogoutButton>
+          
         </ProfileContainer>
       ) : (
         <Box
