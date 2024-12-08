@@ -1,3 +1,9 @@
+/*
+Author: Eric Nohara-LeClair
+Description: 
+The `PlaylistsPage` component displays a list of tracks from a specific Spotify playlist. It retrieves the playlist name from the URL parameters, decodes it, and uses it as the heading for the page. The component includes the `TrackList` component to render the tracks and a "Return" link for navigation back to the playlist list. Material-UI is used for styling the layout, and custom pre-styled components, `PageHeading` and `PageLayoutContainer`, provide consistent page styling. This page ensures a smooth user experience by redirecting back to the playlist list if no valid name is provided.
+*/
+
 "use client";
 
 import { Container, Box } from "@mui/material";

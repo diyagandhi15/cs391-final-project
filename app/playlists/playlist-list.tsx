@@ -1,3 +1,8 @@
+/*
+Author: Eric Nohara-LeClair
+Description: This component, `PlaylistList`, fetches and displays a list of Spotify playlists. It includes a styled playlist cover image with a hover effect, details about each playlist, and a button to view the playlist tracks. The data is fetched from a backend `/api/playlists` endpoint. It uses Material-UI for layout and styling and `styled-components` for the hover animation on the playlist cover images. Each playlist displays its name, description (if available), the number of tracks, and its privacy/collaborative status. Clicking "View Tracks" navigates the user to a detailed track list for the selected playlist using Next.js routing.
+*/
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -21,6 +26,7 @@ export default function PlaylistList() {
     null
   );
 
+  // fetch the playlist data and set it to the state variable
   useEffect(() => {
     const fetcher = async () => {
       try {

@@ -6,7 +6,10 @@
 
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { PageHeading, PageLayoutContainer,} from "@/components/ui/prestyled-components";
+import {
+  PageHeading,
+  PageLayoutContainer,
+} from "@/components/ui/prestyled-components";
 import { CircularProgress, Box } from "@mui/material";
 import PlaylistCard from "@/components/PlaylistCard";
 
@@ -116,7 +119,6 @@ export default function ProfilePage() {
   const [playlists, setPlaylists] = useState<any[]>([]); // Initialize as an empty array to prevent undefined errors
   const [isPlaylistsOpen, setIsPlaylistsOpen] = useState(false);
 
-
   useEffect(() => {
     fetch("/api/profile")
       .then((res) => res.json())
@@ -141,36 +143,50 @@ export default function ProfilePage() {
         <ProfileContainer>
           {/* Display User Info */}
           <UserInfoWrapper>
-            <ProfileImage src={profileData.images?.[0]?.url || "/default-profile.jpg"} alt="Profile photo"/>
+            <ProfileImage
+              src={profileData.images?.[0]?.url || "/default-profile.jpg"}
+              alt="Profile photo"
+            />
             <UserInfoText>
               <h2>{profileData.display_name}</h2>
-              <p><strong>Email:</strong> {profileData.email}</p>
-              <p><strong>Country:</strong> {profileData.country}</p>
+              <p>
+                <strong>Email:</strong> {profileData.email}
+              </p>
+              <p>
+                <strong>Country:</strong> {profileData.country}
+              </p>
             </UserInfoText>
           </UserInfoWrapper>
 
           {/* Display Playlists */}
 
           {/* Collapsible Playlists */}
-          <PlaylistsContainer onClick={() => setIsPlaylistsOpen(!isPlaylistsOpen)}>
-            <span>You have {playlists.length} playlists</span>
+          <PlaylistsContainer
+            onClick={() => setIsPlaylistsOpen(!isPlaylistsOpen)}
+          >
+            <span>
+              You have {playlists.filter((playlist) => playlist).length}{" "}
+              playlists
+            </span>
           </PlaylistsContainer>
           {isPlaylistsOpen && (
             <CollapsibleContainer>
-              {playlists.map((playlist) => (
-                <PlaylistCard
-                  key={playlist.id}
-                  id={playlist.id}
-                  name={playlist.name}
-                  image={playlist.image || "/default-profile.png"}
-                  url={playlist.url}
-                />
-              ))}
+              {playlists.map(
+                (playlist) =>
+                  playlist && (
+                    <PlaylistCard
+                      key={playlist.id}
+                      id={playlist.id}
+                      name={playlist.name}
+                      image={playlist.image || "/music-note.png"}
+                      url={playlist.url}
+                    />
+                  )
+              )}
             </CollapsibleContainer>
           )}
 
           <LogoutButton onClick={handleLogout}>Sign Out</LogoutButton>
-          
         </ProfileContainer>
       ) : (
         <Box

@@ -1,3 +1,9 @@
+/*
+Author: Eric Nohara-LeClair
+Description: 
+The `TrackList` component displays tracks from a specific Spotify playlist in a paginated manner. It uses the playlist ID from the query parameters to fetch track data via an API, with a limit of 20 tracks per page. Tracks are displayed with their cover art, name, duration, and artist information, along with an explicit content marker if applicable. Pagination is achieved using "Back" and "Next" buttons to navigate through pages of tracks. The `CircularProgress` component provides a loading indicator, and the `msToMinutes` utility function converts track durations from milliseconds to a readable "minutes:seconds" format.
+*/
+
 import { useState, useEffect } from "react";
 import { ISpotifyPlaylistTrack } from "@/interfaces/IPlaylist";
 import { useSearchParams, useRouter } from "next/navigation";
