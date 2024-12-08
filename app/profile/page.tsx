@@ -10,8 +10,9 @@ import {
   PageHeading,
   PageLayoutContainer,
 } from "@/components/ui/prestyled-components";
-import { CircularProgress, Box } from "@mui/material";
+import { CircularProgress, Box, Button } from "@mui/material";
 import PlaylistCard from "@/components/PlaylistCard";
+import { useRouter } from "next/navigation";
 
 const ProfileContainer = styled.div`
   display: flex;
@@ -21,7 +22,7 @@ const ProfileContainer = styled.div`
   padding: 2rem;
   background-color: #121212;
   color: #ffffff; /* White text */
-  min-height: 100vh; /* Ensuring the container takes up the full height of the page */
+  min-height: 100%; /* Ensuring the container takes up the full height of the page */
 `;
 
 const UserInfoWrapper = styled.div`
@@ -118,6 +119,7 @@ export default function ProfilePage() {
   const [profileData, setProfileData] = useState<any>(null);
   const [playlists, setPlaylists] = useState<any[]>([]); // Initialize as an empty array to prevent undefined errors
   const [isPlaylistsOpen, setIsPlaylistsOpen] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     fetch("/api/profile")
@@ -183,9 +185,15 @@ export default function ProfilePage() {
                     />
                   )
               )}
+              <Button
+                variant="contained"
+                sx={{ backgroundColor: "#15a146" }}
+                onClick={() => router.push("/playlists")}
+              >
+                More Information
+              </Button>
             </CollapsibleContainer>
           )}
-
           <LogoutButton onClick={handleLogout}>Sign Out</LogoutButton>
         </ProfileContainer>
       ) : (
