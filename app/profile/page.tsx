@@ -114,9 +114,7 @@ const StyledItalicP = styled.p`
 export default function ProfilePage() {
   const [profileData, setProfileData] = useState<any>(null);
   const [playlists, setPlaylists] = useState<any[]>([]); // Initialize as an empty array to prevent undefined errors
-  const [followedArtists, setFollowedArtists] = useState<any[]>([]);
   const [isPlaylistsOpen, setIsPlaylistsOpen] = useState(false);
-  const [isArtistsOpen, setIsArtistsOpen] = useState(false);
 
 
   useEffect(() => {
@@ -125,7 +123,6 @@ export default function ProfilePage() {
       .then((data) => {
         setProfileData(data.profile || {}); // Ensure profile data is always an object
         setPlaylists(data.playlists || []); // Ensure playlists is always an array
-        setFollowedArtists(data.followedArtists || []);
       })
       .catch((err) => console.error(err));
   }, []);
