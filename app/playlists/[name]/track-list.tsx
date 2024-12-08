@@ -12,27 +12,42 @@ export default function TrackList() {
   if (!playlist) router.push("/playlists"); // if no playlist is provided, just redirect back to the playlists route
 
   const [tracks, setTracks] = useState<ISpotifyPlaylistTrack[]>([]);
+  const [nextTracks, setNextTracks] = useState<ISpotifyPlaylistTrack[]>([]);
+  const [page, setPage] = useState(0);
+
+  const limit = 20;
 
   useEffect(() => {
     const fetcher = async () => {
       try {
         const res = await fetch(
-          `/api/playlisttracks?playlist=${encodeURIComponent(playlist)}`
+          `/api/playlisttracks?playlist=${encodeURIComponent(
+            playlist
+          )}&limit=${limit}&page=${page}`
         );
         const data = await res.json();
 
         if (!res.ok) throw new Error(data.message);
 
-        console.log(data.items);
-
         setTracks(data.items);
+
+        const resNext = await fetch(
+          `/api/playlisttracks?playlist=${encodeURIComponent(
+            playlist
+          )}&limit=${limit}&page=${page + 1}`
+        );
+        const dataNext = await resNext.json();
+
+        if (!resNext.ok) throw new Error(data.message);
+
+        setNextTracks(dataNext.items);
       } catch (err) {
         console.error(err);
       }
     };
 
     fetcher();
-  }, []);
+  }, [page]);
 
   return (
     <>
@@ -62,6 +77,10 @@ export default function TrackList() {
         >
           <CircularProgress sx={{ color: "#15a146" }} />
         </Box>
+      )}
+      {page > 0 && <Button onClick={() => setPage(page - 1)}>Previous</Button>}
+      {nextTracks.length > 0 && (
+        <Button onClick={() => setPage(page + 1)}>Next</Button>
       )}
     </>
   );

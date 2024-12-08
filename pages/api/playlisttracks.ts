@@ -19,12 +19,16 @@ export default async function handler(
   }
 
   const playlist = req.query.playlist as string;
+  const limit = req.query.limit as string;
+  const page = req.query.page as string;
 
-  if (!playlist) {
-    return res.status(400).json({ message: "Missing playlist ID parameter" });
+  if (!playlist || !limit || !page) {
+    return res.status(400).json({ message: "Missing parameters" });
   }
 
-  const playlistUrl = `https://api.spotify.com/v1/playlists/${playlist}/tracks`;
+  const offset = parseInt(page) * parseInt(limit);
+
+  const playlistUrl = `https://api.spotify.com/v1/playlists/${playlist}/tracks?offset=${offset}&limit=${limit}`;
 
   try {
     const resp = await fetch(playlistUrl, {
