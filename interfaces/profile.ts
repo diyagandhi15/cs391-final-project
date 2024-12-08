@@ -23,15 +23,3 @@ export interface SpotifyUser {
   product: string;
   external_urls: { spotify: string } | null;
 }
-
-export interface SpotifyArtist {
-  id: string;
-  name: string;
-  genres: string[];
-  images: SpotifyImage[];
-  followers: SpotifyFollowers;
-  popularity: number;
-  external_urls: {
-    spotify: string;
-  };
-}

@@ -31,6 +31,15 @@ export async function GET(): Promise<NextResponse> {
       }
     );
 
+    // Fetch user's top artists from Spotify API
+    const topArtistsRes = await axios.get(
+      "https://api.spotify.com/v1/me/top/artists",
+      {
+        headers: { Authorization: `Bearer ${access_token}` },
+        params: { limit: 10, time_range: "short_term" },
+      }
+    )
+
     return NextResponse.json({
       profile: profileRes.data,
       playlists: playlistsRes.data.items.map(
@@ -46,6 +55,18 @@ export async function GET(): Promise<NextResponse> {
             numtracks: playlist.tracks.total,
           }
       ), // Simplify playlist data for frontend
+      topArtists: topArtistsRes.data.items.map(
+        (artist: any) =>
+          artist && {
+            id: artist.id,
+            name: artist.name,
+            url: artist.external_urls.spotify,
+            image: artist.images
+              ? artist.images[0]?.url
+              : "/default-profile.png",
+            followers: artist.followers.total,
+          }
+      ),
     });
   } catch (error) {
     console.error(error);

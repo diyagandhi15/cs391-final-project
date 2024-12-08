@@ -1,7 +1,6 @@
 // Author: Diya Gandhi
 // This component renders a reusable button for initiating the Spotify OAuth process.
 
-import StyledButton from "../ui/StyledButton";
 import { Button } from "@mui/material";
 
 const params = new URLSearchParams({
