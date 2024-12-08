@@ -106,7 +106,9 @@ export default function PlaylistList() {
                     color: "white",
                     width: "100%",
                   }}
-                  onClick={() => router.push(`/playlists/${item.name}`)}
+                  onClick={() =>
+                    router.push(`/playlists/${item.name}?playlist=${item.id}`)
+                  }
                 >
                   View Tracks
                 </Button>

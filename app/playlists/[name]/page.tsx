@@ -5,7 +5,7 @@ import {
   PageHeading,
   PageLayoutContainer,
 } from "@/components/ui/prestyled-components";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import TrackList from "./track-list";
 
 export default function PlaylistsPage() {

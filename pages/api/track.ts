@@ -1,7 +1,6 @@
 /*
 Author: Eric Nohara-LeClair
-Description: this route /api/playlisttracks uses the access token and fetches the tracks from the current playlist before sending it back to the client. This needed to be on the server side because we needed to access the access_token.
-*/
+Description: this route /api/track uses the access token and fetches the specified track provided in the query string */
 
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -18,16 +17,16 @@ export default async function handler(
     return res.status(401).json({ error: "Unauthorized" });
   }
 
-  const playlist = req.query.playlist as string;
+  const track = req.query.track as string;
 
-  if (!playlist) {
-    return res.status(400).json({ message: "Missing playlist ID parameter" });
+  if (!track) {
+    return res.status(400).json({ message: "Missing track ID parameter" });
   }
 
-  const playlistUrl = `https://api.spotify.com/v1/playlists/${playlist}/tracks`;
+  const trackUrl = `https://api.spotify.com/v1/tracks/${track}`;
 
   try {
-    const resp = await fetch(playlistUrl, {
+    const resp = await fetch(trackUrl, {
       method: "GET",
       headers: {
         ContentType: "application/json",
@@ -37,11 +36,11 @@ export default async function handler(
 
     const data = await resp.json();
 
-    console.log(data.items);
+    console.log(data);
 
     if (!resp.ok) throw new Error(data.message);
 
-    res.status(200).json({ items: data.items });
+    res.status(200).json({ images: data.album.images });
   } catch (err) {
     // error handling - need to cast to error
     const error = err as Error;

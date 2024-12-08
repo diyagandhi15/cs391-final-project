@@ -12,6 +12,7 @@ export interface ISpotifyPlaylistItem {
   public: boolean | null;
   tracks: { href: string; total: number };
   images: IImage[] | null;
+  id: string;
 }
 
 export interface ISpotifyPlaylist {
@@ -33,5 +34,6 @@ export interface ISpotifyPlaylistTrack {
     external_urls: { spotify: string } | null;
     name: string | null;
     preview_url: string | null;
+    id: string;
   };
 }
