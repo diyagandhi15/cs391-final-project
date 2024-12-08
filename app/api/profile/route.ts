@@ -9,71 +9,83 @@ import axios from "axios";
 export const dynamic = "force-dynamic";
 
 export async function GET(): Promise<NextResponse> {
-  const cookieStore = await cookies();
-  const access_token = cookieStore.get("access_token")?.value;
+    const cookieStore = await cookies();
+    const access_token = cookieStore.get("access_token")?.value;
 
-  if (!access_token) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+    if (!access_token) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
-  try {
-    // Fetch user profile from Spotify API
-    const profileRes = await axios.get("https://api.spotify.com/v1/me", {
-      headers: { Authorization: `Bearer ${access_token}` },
-    });
-
-    // Fetch user's playlists from Spotify API
-    const playlistsRes = await axios.get(
-      "https://api.spotify.com/v1/me/playlists",
-      {
+    try {
+        // Fetch user profile from Spotify API
+        const profileUrl = "https://api.spotify.com/v1/me";
+        const profileRes = await axios.get(profileUrl, {
         headers: { Authorization: `Bearer ${access_token}` },
-        params: { limit: 50 }, // Getting at most 50 playlists
-      }
-    );
+        });
 
-    // Fetch user's top artists from Spotify API
-    const topArtistsRes = await axios.get(
-      "https://api.spotify.com/v1/me/top/artists",
-      {
-        headers: { Authorization: `Bearer ${access_token}` },
-        params: { limit: 10, time_range: "short_term" },
-      }
-    )
+        // calls helper function to fetch user's playlist info
+        // The playlist user created
+        const allPlaylists = await fetchAllPlaylists(access_token)
 
-    return NextResponse.json({
-      profile: profileRes.data,
-      playlists: playlistsRes.data.items.map(
-        (playlist: any) =>
-          playlist && {
-            id: playlist.id,
-            name: playlist.name,
-            url: playlist.external_urls.spotify,
-            image: playlist.images
-              ? playlist.images[0]?.url
-              : "/music-note.png",
-            owner: playlist.owner.display_name,
-            numtracks: playlist.tracks.total,
-          }
-      ), // Simplify playlist data for frontend
-      topArtists: topArtistsRes.data.items.map(
-        (artist: any) =>
-          artist && {
-            id: artist.id,
-            name: artist.name,
-            url: artist.external_urls.spotify,
-            image: artist.images
-              ? artist.images[0]?.url
-              : "/default-profile.png",
-            followers: artist.followers.total,
-          }
-      ),
-    });
-  } catch (error) {
-    console.error(error);
-    console.error("Error fetching profile data:");
-    return NextResponse.json(
-      { error: "Failed to fetch profile data" },
-      { status: 500 }
-    );
-  }
+        // Simplify playlist data for frontend and return
+        return NextResponse.json({
+        profile: profileRes.data,
+        playlists: allPlaylists.map(
+            (playlist: any) =>
+            playlist && {
+                id: playlist.id,
+                name: playlist.name,
+                url: playlist.external_urls.spotify,
+                //if user doesnt have a profile image set the default profile image as their image
+                image: playlist.images?.[0]?.url || "/default-profile.png",
+                owner: playlist.owner.display_name,
+                numtracks: playlist.tracks.total,
+            }
+        ), 
+        playlistCount: allPlaylists.length, // Total number of playlists
+        });
+    } catch (error) {
+        console.error("Error fetching profile data");
+        return NextResponse.json(
+        { error: "Failed to fetch profile data" },
+        { status: 500 }
+        );
+    }
 }
+
+
+// Function to fetch all playlists
+const fetchAllPlaylists = async (accessToken: string): Promise<any[]> => {
+    
+    // Fetch all playlists using pagination
+    // Spotify api limits the number of items to return Max:50
+    const allPlaylists: any[] = [];
+    const limit = 50; // Maximum items per request
+    let offset = 0;
+
+    try {
+        // Keep fetching playlists until no more items are returned or offset exceeds max limit
+        do {
+        const playlistsUrl = `https://api.spotify.com/v1/me/playlists?limit=${limit}&offset=${offset}`;
+        const playlistsRes = await axios.get(playlistsUrl, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+        });
+
+        // Add fetched playlists to the allPlaylists array
+        allPlaylists.push(...playlistsRes.data.items);
+
+        // Update offset for the next batch
+        offset += limit;
+
+        // Stop when the number of items fetched is less than the limit
+        // or offset exceeds the max limit
+        if (playlistsRes.data.items.length < limit || offset > 100000) break;
+        } while (true);
+
+    } catch (error) {
+        console.error("Error fetching playlists:", error);
+        throw new Error("Failed to fetch playlists");
+    }
+
+    return allPlaylists;
+};
