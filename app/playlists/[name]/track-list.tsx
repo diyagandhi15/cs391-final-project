@@ -3,6 +3,7 @@ import { ISpotifyPlaylistTrack } from "@/interfaces/IPlaylist";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Box, CircularProgress, Typography, Button } from "@mui/material";
 import TrackCover from "./track-cover";
+import { Explicit } from "@mui/icons-material";
 
 export default function TrackList() {
   const searchParams = useSearchParams();
@@ -49,22 +50,45 @@ export default function TrackList() {
     fetcher();
   }, [page]);
 
+  const msToMinutes = (ms: number) => {
+    const totalSeconds = Math.floor(ms / 1000);
+    const mins = Math.floor(totalSeconds / 60);
+    const secs = totalSeconds % 60;
+
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
+
   return (
-    <>
+    <Box display="flex" flexDirection="column" gap="1rem" marginTop="1rem">
       {tracks.length > 0 ? (
         tracks.map(
           (track: ISpotifyPlaylistTrack, index) =>
             track &&
             track.track && (
-              <Box key={index}>
-                <Typography
-                  variant="h5"
-                  component="h2"
-                  sx={{ fontWeight: "bold" }}
-                >
-                  {track.track.name}
-                </Typography>
-                <TrackCover trackID={track.track.id} />
+              <Box key={index} display="flex" alignItems="center" gap="1rem">
+                <a href={track.track.external_urls?.spotify} target="_blank">
+                  <TrackCover trackID={track.track.id} />
+                </a>
+                <Box display="flex" flexDirection="column">
+                  <Typography
+                    variant="h5"
+                    component="h2"
+                    sx={{ fontWeight: "bold", margin: 0 }}
+                  >
+                    {track.track.name}{" "}
+                    {track.track.explicit ? <Explicit /> : null}
+                  </Typography>
+                  <i>
+                    {track.track.artists
+                      .map((artist) => artist.name)
+                      .join(", ")}
+                  </i>
+                  {track.track.duration_ms && (
+                    <p style={{ margin: 0, marginTop: "0.25rem" }}>
+                      {msToMinutes(track.track.duration_ms)}
+                    </p>
+                  )}
+                </Box>
               </Box>
             )
         )
@@ -78,10 +102,14 @@ export default function TrackList() {
           <CircularProgress sx={{ color: "#15a146" }} />
         </Box>
       )}
-      {page > 0 && <Button onClick={() => setPage(page - 1)}>Previous</Button>}
-      {nextTracks.length > 0 && (
-        <Button onClick={() => setPage(page + 1)}>Next</Button>
-      )}
-    </>
+      <Box display="flex" gap="2rem">
+        {page > 0 && (
+          <Button onClick={() => setPage(page - 1)}>Previous</Button>
+        )}
+        {nextTracks.length > 0 && (
+          <Button onClick={() => setPage(page + 1)}>Next</Button>
+        )}
+      </Box>
+    </Box>
   );
 }

@@ -1,5 +1,15 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import styled from "styled-components";
+
+const HoverableImage = styled(Image)`
+  border-radius: 0.25rem;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
 
 export default function TrackCover({ trackID }: { trackID: string }) {
   const [cover, setCover] = useState("/music-note.png");
@@ -23,5 +33,7 @@ export default function TrackCover({ trackID }: { trackID: string }) {
     fetchTrackCover();
   }, [trackID]);
 
-  return <Image src={cover} alt="track cover" width={150} height={150} />;
+  return (
+    <HoverableImage src={cover} alt="track cover" width={75} height={75} />
+  );
 }

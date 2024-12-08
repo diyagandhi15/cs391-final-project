@@ -26,14 +26,12 @@ export interface ISpotifyPlaylist {
 }
 
 export interface ISpotifyPlaylistTrack {
-  added_at: string | null;
   track: {
-    artists: string[];
+    artists: { name: string }[];
     duration_ms: number | null;
     explicit: boolean | null;
     external_urls: { spotify: string } | null;
     name: string | null;
-    preview_url: string | null;
     id: string;
   };
 }
