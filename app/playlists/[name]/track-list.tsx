@@ -6,7 +6,7 @@ The `TrackList` component displays tracks from a specific Spotify playlist in a 
 
 import { useState, useEffect } from "react";
 import { ISpotifyPlaylistTrack } from "@/interfaces/IPlaylist";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Box, CircularProgress, Typography, Button } from "@mui/material";
 import { Explicit, NavigateNext, NavigateBefore } from "@mui/icons-material";
 import Image from "next/image";
@@ -23,16 +23,15 @@ const HoverableImage = styled(Image)`
 
 export default function TrackList() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const playlist = searchParams?.get("playlist") as string;
-
-  if (!playlist) router.push("/playlists"); // if no playlist is provided, just redirect back to the playlists route
 
   const [tracks, setTracks] = useState<ISpotifyPlaylistTrack[]>([]);
   const [nextTracks, setNextTracks] = useState<ISpotifyPlaylistTrack[]>([]);
   const [page, setPage] = useState(0);
 
   const limit = 5;
+
+  if (!playlist) return <p>No playlist provided.</p>;
 
   useEffect(() => {
     const fetcher = async () => {
