@@ -8,8 +8,18 @@ import { useState, useEffect } from "react";
 import { ISpotifyPlaylistTrack } from "@/interfaces/IPlaylist";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Box, CircularProgress, Typography, Button } from "@mui/material";
-import TrackCover from "./track-cover";
 import { Explicit, NavigateNext, NavigateBefore } from "@mui/icons-material";
+import Image from "next/image";
+import styled from "styled-components";
+
+const HoverableImage = styled(Image)`
+  border-radius: 0.25rem;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
 
 export default function TrackList() {
   const searchParams = useSearchParams();
@@ -22,7 +32,7 @@ export default function TrackList() {
   const [nextTracks, setNextTracks] = useState<ISpotifyPlaylistTrack[]>([]);
   const [page, setPage] = useState(0);
 
-  const limit = 20;
+  const limit = 10;
 
   useEffect(() => {
     const fetcher = async () => {
@@ -89,7 +99,16 @@ export default function TrackList() {
                 }}
               >
                 <a href={track.track.external_urls?.spotify} target="_blank">
-                  <TrackCover trackID={track.track.id} />
+                  <HoverableImage
+                    src={
+                      track.track.album && track.track.album.images.length > 0
+                        ? track.track.album.images[0].url
+                        : "/music-note.png"
+                    }
+                    alt="track cover"
+                    width={75}
+                    height={75}
+                  />
                 </a>
                 <Box display="flex" flexDirection="column">
                   <Typography
@@ -131,12 +150,20 @@ export default function TrackList() {
         marginBottom="1rem"
       >
         {page > 0 && (
-          <Button variant="contained" onClick={() => setPage(page - 1)}>
+          <Button
+            variant="contained"
+            sx={{ backgroundColor: "#15a146" }}
+            onClick={() => setPage(page - 1)}
+          >
             <NavigateBefore /> Back
           </Button>
         )}
         {nextTracks.length > 0 && (
-          <Button variant="contained" onClick={() => setPage(page + 1)}>
+          <Button
+            variant="contained"
+            sx={{ backgroundColor: "#15a146" }}
+            onClick={() => setPage(page + 1)}
+          >
             Next <NavigateNext />
           </Button>
         )}

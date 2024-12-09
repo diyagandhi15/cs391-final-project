@@ -41,8 +41,6 @@ export default async function handler(
 
     const data = await resp.json();
 
-    console.log(data.items);
-
     if (!resp.ok) throw new Error(data.message);
 
     res.status(200).json({ items: data.items });

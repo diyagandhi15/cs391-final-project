@@ -49,5 +49,6 @@ export interface ISpotifyPlaylistTrack {
     external_urls: { spotify: string } | null;
     name: string | null;
     id: string;
+    album: { images: { url: string }[] };
   };
 }
