@@ -21,38 +21,38 @@ export default function PlaylistsPage() {
   const encodedName = params?.name as string;
   const name = decodeURIComponent(encodedName);
 
-  if (!name) router.push("/playlists");
-
   return (
-    <>
-      <PageLayoutContainer>
-        <PageHeading>
-          <h1>Tracks From {name}</h1>
-        </PageHeading>
-        <Container
-          sx={{
-            width: "100%",
-            backgroundColor: "white",
-            borderRadius: "0.5rem",
-            minHeight: "60vh",
-          }}
-        >
-          <Container maxWidth="sm">
-            <Box display="flex" flexDirection="column" alignItems="center">
+    <PageLayoutContainer>
+      <PageHeading>
+        <h1>Tracks From {name}</h1>
+      </PageHeading>
+      <Container
+        sx={{
+          width: "100%",
+          backgroundColor: "white",
+          borderRadius: "0.5rem",
+          minHeight: "60vh",
+        }}
+      >
+        <Container maxWidth="sm">
+          <Box display="flex" flexDirection="column" alignItems="center">
+            {name ? (
               <TrackList />
-              <Link
-                href="/playlists"
-                style={{
-                  textDecoration: "none",
-                  marginBottom: "1rem",
-                }}
-              >
-                Return
-              </Link>
-            </Box>
-          </Container>
+            ) : (
+              <p>No tracks found. Check for invalid or missing playlist id.</p>
+            )}
+            <Link
+              href="/playlists"
+              style={{
+                textDecoration: "none",
+                marginBottom: "1rem",
+              }}
+            >
+              Return
+            </Link>
+          </Box>
         </Container>
-      </PageLayoutContainer>
-    </>
+      </Container>
+    </PageLayoutContainer>
   );
 }
