@@ -83,7 +83,6 @@ const LogoutButton = styled.button`
 
 const PlaylistsContainer = styled.div`
   width: 80%;
-  //max-width: 700px;
   background-color: #1c1c1c;
   border: 2px solid #1db954;
   color: #ffffff;
@@ -95,7 +94,9 @@ const PlaylistsContainer = styled.div`
   font-weight: bold;
   margin-bottom: 1rem;
   transition: background-color 0.3s ease;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 
   &:hover {
     background-color: #282828;
@@ -120,20 +121,18 @@ const StyledItalicP = styled.p`
   margin-top: 0.5rem;
 `;
 
-const StyledLink = styled.a`
+const StyledLink = styled(Link)`
   color: #1db954;
   text-decoration: none;
-  position: absolute;
 
-  //Distance from the top edge 
+  //Distance from the top edge
   top: 20px;
   right: 10px; /* Distance from the right edge */
   font-size: 0.9rem;
   &:hover {
     text-decoration: underline;
   }
-`
-
+`;
 
 export default function ProfilePage() {
   const [profileData, setProfileData] = useState<any>(null);
@@ -165,9 +164,7 @@ export default function ProfilePage() {
         <h1>User Profile</h1>
       </PageHeading>
       {profileData ? (
-
         <ProfileContainer>
-
           {/* Display User Info */}
           <UserInfoWrapper>
             <ProfileImage
@@ -195,7 +192,9 @@ export default function ProfilePage() {
               You have {playlists.filter((playlist) => playlist).length}{" "}
               playlists
             </span>
-            <small><StyledLink href="/playlists">Go to Playlists Page</StyledLink></small>
+            <small>
+              <StyledLink href="/playlists">Go to Playlists Page</StyledLink>
+            </small>
           </PlaylistsContainer>
           {isPlaylistsOpen && (
             <CollapsibleContainer>
@@ -211,7 +210,6 @@ export default function ProfilePage() {
                     />
                   )
               )}
-              
             </CollapsibleContainer>
           )}
 
