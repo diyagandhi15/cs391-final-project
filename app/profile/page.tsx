@@ -22,8 +22,10 @@ const ProfileContainer = styled.div`
   margin: auto;
   padding: 2rem;
   background-color: #121212;
-  color: #ffffff; /* White text */
-  min-height: 100vh; /* Ensuring the container takes up the full height of the page */
+  color: #ffffff;
+
+  //Ensuring the container takes up the full height of the page
+  min-height: 100vh;
 `;
 
 const UserInfoWrapper = styled.div`
@@ -37,30 +39,27 @@ const ProfileImage = styled.img`
   height: 150px;
   border-radius: 50%;
   margin-right: 1.5rem;
-  border: 3px solid #1db954; /* Spotify green border */
+
+  //Spotify green border
+  border: 3px solid #1db954;
 `;
 
 const UserInfoText = styled.div`
   text-align: left;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+
   h2 {
     font-size: 1.8rem;
     margin: 0;
     font-weight: bold;
-    color: #1db954; /* Spotify green */
+    color: #1db954;
   }
   p {
     margin: 0;
     margin-top: 0.5rem;
     font-size: 1.2rem;
-    color: #b3b3b3; /* Subtle gray text */
-  }
-
-  i {
-    color: grey;
-    font-weight: 100;
+    color: #b3b3b3;
   }
 `;
 
@@ -68,7 +67,7 @@ const LogoutButton = styled.button`
   padding: 10px 20px;
   background-color: #1db954;
   margin-top: 20px;
-  color: #ffffff; /* White text */
+  color: #ffffff;
   border: none;
   border-radius: 10px;
   font-weight: bold;
@@ -76,14 +75,15 @@ const LogoutButton = styled.button`
   transition: background-color 0.3s ease, transform 0.2s ease;
 
   &:hover {
-    background-color: #1ed760; /* Lighter Spotify green */
+    //Lighter Spotify green
+    background-color: #1ed760;
     transform: scale(1.05);
   }
 `;
 
 const PlaylistsContainer = styled.div`
   width: 80%;
-  max-width: 700px;
+  //max-width: 700px;
   background-color: #1c1c1c;
   border: 2px solid #1db954;
   color: #ffffff;
@@ -107,7 +107,10 @@ const CollapsibleContainer = styled.div`
   max-width: 700px;
   display: flex;
   flex-direction: column;
+
+  //container's defined width and height will be hidden
   overflow: hidden;
+
   transition: max-height 0.3s ease-in-out;
 `;
 
@@ -121,7 +124,9 @@ const StyledLink = styled.a`
   color: #1db954;
   text-decoration: none;
   position: absolute;
-  top: 20px; /* Distance from the top edge */
+
+  //Distance from the top edge 
+  top: 20px;
   right: 10px; /* Distance from the right edge */
   font-size: 0.9rem;
   &:hover {
@@ -160,7 +165,9 @@ export default function ProfilePage() {
         <h1>User Profile</h1>
       </PageHeading>
       {profileData ? (
+
         <ProfileContainer>
+
           {/* Display User Info */}
           <UserInfoWrapper>
             <ProfileImage
@@ -207,6 +214,8 @@ export default function ProfilePage() {
               
             </CollapsibleContainer>
           )}
+
+          {/* Logout Button */}
           <LogoutButton onClick={handleLogout}>Sign Out</LogoutButton>
         </ProfileContainer>
       ) : (
