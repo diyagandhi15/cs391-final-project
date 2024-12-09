@@ -11,12 +11,11 @@ import {
   PageHeading,
   PageLayoutContainer,
 } from "@/components/ui/prestyled-components";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import TrackList from "./track-list";
 import Link from "next/link";
 
 export default function PlaylistsPage() {
-  const router = useRouter();
   const params = useParams();
   const encodedName = params?.name as string;
   const name = decodeURIComponent(encodedName);
