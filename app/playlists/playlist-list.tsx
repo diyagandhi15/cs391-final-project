@@ -107,7 +107,7 @@ export default function PlaylistList() {
                   </li>
                   <li>{item.public ? "public" : "private"} playlist</li>
                 </ul>
-                {item.id && (
+                {item.id && item.tracks.total > 0 && (
                   <Button
                     sx={{
                       backgroundColor: "#15a146",
