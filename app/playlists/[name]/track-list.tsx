@@ -23,7 +23,11 @@ const HoverableImage = styled(Image)`
 
 export default function TrackList() {
   const searchParams = useSearchParams();
+  console.log("searchParams:", searchParams?.toString());
   const playlist = searchParams?.get("playlist") as string;
+  console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+  console.log("playlist:", playlist);
+  console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
   const [tracks, setTracks] = useState<ISpotifyPlaylistTrack[]>([]);
   const [nextTracks, setNextTracks] = useState<ISpotifyPlaylistTrack[]>([]);
