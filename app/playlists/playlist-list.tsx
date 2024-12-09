@@ -107,18 +107,20 @@ export default function PlaylistList() {
                   </li>
                   <li>{item.public ? "public" : "private"} playlist</li>
                 </ul>
-                <Button
-                  sx={{
-                    backgroundColor: "#15a146",
-                    color: "white",
-                    width: "100%",
-                  }}
-                  onClick={() =>
-                    router.push(`/playlists/${item.name}?playlist=${item.id}`)
-                  }
-                >
-                  View Tracks
-                </Button>
+                {item.id && (
+                  <Button
+                    sx={{
+                      backgroundColor: "#15a146",
+                      color: "white",
+                      width: "100%",
+                    }}
+                    onClick={() =>
+                      router.push(`/playlists/${item.name}?playlist=${item.id}`)
+                    }
+                  >
+                    View Tracks
+                  </Button>
+                )}
               </Box>
             </Box>
           ) : null
