@@ -16,9 +16,11 @@ const getTopArtists = async (accessToken: string) => {
       },
     });
     return response.data;
-  } catch (error) {  // error handling
+  } catch (error) {
+    // error handling
     if (axios.isAxiosError(error)) {
-      const errorMessage = error.response?.data?.error?.message || error.message;
+      const errorMessage =
+        error.response?.data?.error?.message || error.message;
       console.error("Spotify API error:", errorMessage);
       throw new Error("Failed to fetch top artists");
     } else {
@@ -28,20 +30,23 @@ const getTopArtists = async (accessToken: string) => {
   }
 };
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const access_token = req.cookies.access_token; // get access token from cookies
 
-  if (!access_token) { // check if access token is present
+  if (!access_token) {
+    // check if access token is present
     return res.status(401).json({ error: "Unauthorized" });
   }
 
   try {
-    console.log("Fetching top artists...");
     const data = await getTopArtists(access_token); // call helper with access token
-    console.log("Fetched top artists:", data);
 
     res.status(200).json(data);
-  } catch (error: unknown) { // error handling
+  } catch (error: unknown) {
+    // error handling
     if (error instanceof Error) {
       console.error("Error:", error.message);
       res.status(500).json({ error: error.message });

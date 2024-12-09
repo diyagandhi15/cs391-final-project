@@ -2,12 +2,12 @@
 // API handler for fetching top artists' genres from Spotify API
 // This endpoint retrieves the authenticated user's top artists from Spotify and extracts their genres.
 
-import { NextApiRequest, NextApiResponse } from 'next';
-import axios from 'axios';
+import { NextApiRequest, NextApiResponse } from "next";
+import axios from "axios";
 
 // Function to fetch the top artists of the user from Spotify API
 const getTopArtists = async (accessToken: string) => {
-  const url = 'https://api.spotify.com/v1/me/top/artists?limit=20';
+  const url = "https://api.spotify.com/v1/me/top/artists?limit=20";
 
   try {
     // Send GET request to fetch top artists with the provided access token.
@@ -20,9 +20,10 @@ const getTopArtists = async (accessToken: string) => {
   } catch (error) {
     // Handle specific errors from the API request
     if (axios.isAxiosError(error)) {
-      const errorMessage = error.response?.data?.error?.message || error.message;
-      console.error('Spotify API error:', errorMessage);
-      throw new Error('Failed to fetch top artists');
+      const errorMessage =
+        error.response?.data?.error?.message || error.message;
+      console.error("Spotify API error:", errorMessage);
+      throw new Error("Failed to fetch top artists");
     }
   }
 };
@@ -37,30 +38,29 @@ const extractGenres = (artists: any[]) => {
 };
 
 // Main API handler to process the request and response
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   // Retrieve the access token from cookies for authentication
   const access_token = req.cookies.access_token;
 
   // If no access token is found, return an unauthorized error response
   if (!access_token) {
-    return res.status(401).json({ error: 'Unauthorized' });
+    return res.status(401).json({ error: "Unauthorized" });
   }
 
   try {
-    console.log('Fetching top artists...');
     const data = await getTopArtists(access_token); // Fetch the top artists data from Spotify
-    console.log('Fetched data:', data);
-
     const genres = extractGenres(data.items); // Extract genres from the fetched artists' data
-    console.log('Extracted genres:', genres);
 
     // Send the genres back to the client as a JSON response
     res.status(200).json({ genres });
   } catch (error: unknown) {
     // Error handling
     if (error instanceof Error) {
-      console.error('Error:', error.message);
+      console.error("Error:", error.message);
       res.status(500).json({ error: error.message });
-    } 
+    }
   }
 }

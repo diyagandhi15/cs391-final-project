@@ -32,7 +32,7 @@ export default function TrackList() {
   const [nextTracks, setNextTracks] = useState<ISpotifyPlaylistTrack[]>([]);
   const [page, setPage] = useState(0);
 
-  const limit = 10;
+  const limit = 5;
 
   useEffect(() => {
     const fetcher = async () => {
@@ -112,7 +112,7 @@ export default function TrackList() {
                 </a>
                 <Box display="flex" flexDirection="column">
                   <Typography
-                    variant="h5"
+                    variant="h6"
                     component="h2"
                     sx={{ fontWeight: "bold", margin: 0 }}
                   >
@@ -147,6 +147,7 @@ export default function TrackList() {
         display="flex"
         gap="2rem"
         justifyContent="center"
+        alignItems="center"
         marginBottom="1rem"
       >
         {page > 0 && (
@@ -158,6 +159,7 @@ export default function TrackList() {
             <NavigateBefore /> Back
           </Button>
         )}
+        Page {page}
         {nextTracks.length > 0 && (
           <Button
             variant="contained"
