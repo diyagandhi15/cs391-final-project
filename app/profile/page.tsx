@@ -13,6 +13,7 @@ import {
 import { CircularProgress, Box, Button } from "@mui/material";
 import PlaylistCard from "@/components/PlaylistCard";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const ProfileContainer = styled.div`
   display: flex;
@@ -22,7 +23,7 @@ const ProfileContainer = styled.div`
   padding: 2rem;
   background-color: #121212;
   color: #ffffff; /* White text */
-  min-height: 100%; /* Ensuring the container takes up the full height of the page */
+  min-height: 100vh; /* Ensuring the container takes up the full height of the page */
 `;
 
 const UserInfoWrapper = styled.div`
@@ -94,6 +95,7 @@ const PlaylistsContainer = styled.div`
   font-weight: bold;
   margin-bottom: 1rem;
   transition: background-color 0.3s ease;
+  position: relative;
 
   &:hover {
     background-color: #282828;
@@ -115,13 +117,28 @@ const StyledItalicP = styled.p`
   margin-top: 0.5rem;
 `;
 
+const StyledLink = styled.a`
+  color: #1db954;
+  text-decoration: none;
+  position: absolute;
+  top: 20px; /* Distance from the top edge */
+  right: 10px; /* Distance from the right edge */
+  font-size: 0.9rem;
+  &:hover {
+    text-decoration: underline;
+  }
+`
+
+
 export default function ProfilePage() {
   const [profileData, setProfileData] = useState<any>(null);
   const [playlists, setPlaylists] = useState<any[]>([]); // Initialize as an empty array to prevent undefined errors
   const [isPlaylistsOpen, setIsPlaylistsOpen] = useState(false);
   const router = useRouter();
 
+  // Fetch profile and playlists data
   useEffect(() => {
+    // Make API call
     fetch("/api/profile")
       .then((res) => res.json())
       .then((data) => {
@@ -131,6 +148,7 @@ export default function ProfilePage() {
       .catch((err) => console.error(err));
   }, []);
 
+  // Handle user logout
   const handleLogout = () => {
     document.cookie = "access_token=; Max-Age=0; Path=/"; // Clear access token
     window.location.href = "/"; // Redirect to homepage
@@ -170,6 +188,7 @@ export default function ProfilePage() {
               You have {playlists.filter((playlist) => playlist).length}{" "}
               playlists
             </span>
+            <small><StyledLink href="/playlists">Go to Playlists Page</StyledLink></small>
           </PlaylistsContainer>
           {isPlaylistsOpen && (
             <CollapsibleContainer>
@@ -185,13 +204,7 @@ export default function ProfilePage() {
                     />
                   )
               )}
-              <Button
-                variant="contained"
-                sx={{ backgroundColor: "#15a146" }}
-                onClick={() => router.push("/playlists")}
-              >
-                More Information
-              </Button>
+              
             </CollapsibleContainer>
           )}
           <LogoutButton onClick={handleLogout}>Sign Out</LogoutButton>
