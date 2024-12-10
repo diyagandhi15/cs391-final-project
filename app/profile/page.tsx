@@ -83,6 +83,7 @@ const LogoutButton = styled.button`
 
 const PlaylistsContainer = styled.div`
   width: 80%;
+  max-width: 700px;
   background-color: #1c1c1c;
   border: 2px solid #1db954;
   color: #ffffff;
@@ -94,14 +95,13 @@ const PlaylistsContainer = styled.div`
   font-weight: bold;
   margin-bottom: 1rem;
   transition: background-color 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  position: relative;
 
   &:hover {
     background-color: #282828;
   }
 `;
+
 
 const CollapsibleContainer = styled.div`
   width: 80%;
@@ -115,30 +115,32 @@ const CollapsibleContainer = styled.div`
   transition: max-height 0.3s ease-in-out;
 `;
 
-const StyledItalicP = styled.p`
-  font-style: italic;
-  color: #b3b3b3;
-  margin-top: 0.5rem;
-`;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled.a`
   color: #1db954;
   text-decoration: none;
+  position: absolute;
 
-  //Distance from the top edge
+  //Distance from the top edge 
   top: 20px;
   right: 10px; /* Distance from the right edge */
   font-size: 0.9rem;
   &:hover {
     text-decoration: underline;
   }
-`;
+  @media (max-width: 900px) {
+    position: relative; /* Reset to normal flow for smaller screens */
+    top: auto; /* Remove top positioning */
+    right: auto; /* Remove right positioning */
+    margin-top: 1rem;
+  }
+`
+
 
 export default function ProfilePage() {
   const [profileData, setProfileData] = useState<any>(null);
   const [playlists, setPlaylists] = useState<any[]>([]); // Initialize as an empty array to prevent undefined errors
   const [isPlaylistsOpen, setIsPlaylistsOpen] = useState(false);
-  const router = useRouter();
 
   // Fetch profile and playlists data
   useEffect(() => {
@@ -164,7 +166,9 @@ export default function ProfilePage() {
         <h1>User Profile</h1>
       </PageHeading>
       {profileData ? (
+
         <ProfileContainer>
+
           {/* Display User Info */}
           <UserInfoWrapper>
             <ProfileImage
@@ -188,14 +192,15 @@ export default function ProfilePage() {
           <PlaylistsContainer
             onClick={() => setIsPlaylistsOpen(!isPlaylistsOpen)}
           >
-            <span>
+            <div>
               You have {playlists.filter((playlist) => playlist).length}{" "}
               playlists
-            </span>
-            <small>
-              <StyledLink href="/playlists">Go to Playlists Page</StyledLink>
-            </small>
+            </div>
+            <div>
+              <small><StyledLink href="/playlists">Go to Playlists Page</StyledLink></small>
+            </div>
           </PlaylistsContainer>
+          
           {isPlaylistsOpen && (
             <CollapsibleContainer>
               {playlists.map(
@@ -210,6 +215,7 @@ export default function ProfilePage() {
                     />
                   )
               )}
+              
             </CollapsibleContainer>
           )}
 

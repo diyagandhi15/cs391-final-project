@@ -45,6 +45,13 @@ const PlaylistItemContainer = styled.div`
         color: #ffffff;
         }
     }
+    
+    @media (max-width: 900px) {
+
+        a{
+            padding-left: 5%;
+        }
+    }
 `;
 
 const PlaylistImage = styled.img`
