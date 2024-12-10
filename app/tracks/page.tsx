@@ -7,6 +7,13 @@ import {
   PageLayoutContainer,
 } from "@/components/ui/prestyled-components";
 
+/**
+ * A React component representing the "Top Tracks" page.
+ *
+ * This component serves as the main container for displaying the user's
+ * top tracks in a styled layout.
+ */
+
 export default function TopTracksPage() {
   return (
     <PageLayoutContainer>
